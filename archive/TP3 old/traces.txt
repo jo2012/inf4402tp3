@@ -1,0 +1,165 @@
+ 
+ Traces du TP2
+---------------
+
+Serveurs:
+
+D:\C++\Cours\Aut2005\INF4402\TP2\class>start rmiregistry
+
+D:\C++\Cours\Aut2005\INF4402\TP2\class>java PolyServer
+PolyPaypal Server started...
+PolyEbay Server started...
+PolyEbay Server ready!
+CreditCheck Server started...
+CreditCheck Server ready!
+PolyPaypal Server ready!
+
+PolyPaypal: Connection de client2!
+PolyEbay: Connection de client2!
+-------------------------------------------------------------------
+|     Serveur PolyEbay, 3 5 2005, 0:25:21                         |
+|-----------------------------------------------------------------|
+| Connexions: PolyPaypal, client2                                 |
+|                                                                 |
+| Nombre de clients connectes = 1                                 |
+| Nom(s) : client2                                                |
+|--------------------                                             |
+| Java 2: Livre, prix 20.35, Fermeture a 0:26:0                   |
+|--------------------                                             |
+| Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0             |
+|--------------------                                             |
+| Horloge Biologique: DVD, prix 21.5, Fermeture a 0:27:0          |
+|                                                                 |
+|                                                                 |
+-------------------------------------------------------------------
+
+PolyPaypal: Connection de client1!
+PolyEbay: Connection de client1!
+-------------------------------------------------------------------
+|     Serveur PolyEbay, 3 5 2005, 0:25:31                         |
+|-----------------------------------------------------------------|
+| Connexions: PolyPaypal, client2, client1                        |
+|                                                                 |
+| Nombre de clients connectes = 2                                 |
+| Nom(s) : client2, client1                                       |
+|--------------------                                             |
+| Java 2: Livre, prix 20.35, Fermeture a 0:26:0                   |
+| mise 1: 24.0 par <client2> a 0:25:23                            |
+| derniere mise 25.0 par <client1> a 0:25:31                      |
+|--------------------                                             |
+| Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0             |
+|--------------------                                             |
+| Horloge Biologique: DVD, prix 21.5, Fermeture a 0:27:0          |
+|                                                                 |
+|                                                                 |
+-------------------------------------------------------------------
+
+-------------------------------------------------------------------
+|     Serveur PolyEbay, 3 5 2005, 0:25:45                         |
+|-----------------------------------------------------------------|
+| Connexions: PolyPaypal, client2, client1                        |
+|                                                                 |
+| Nombre de clients connectes = 2                                 |
+| Nom(s) : client2, client1                                       |
+|--------------------                                             |
+| Java 2: Livre, prix 20.35, Fermeture a 0:26:0                   |
+| mise 1: 24.0 par <client2> a 0:25:23                            |
+| derniere mise 25.0 par <client1> a 0:25:31                      |
+|--------------------                                             |
+| Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0             |
+|--------------------                                             |
+| Horloge Biologique: DVD, prix 21.5, Fermeture a 0:27:0          |
+| mise 1: 24.0 par <client2> a 0:25:35                            |
+| derniere mise 23.0 par <client1> a 0:25:45                      |
+|                                                                 |
+|                                                                 |
+-------------------------------------------------------------------
+
+-------------------------------------------------------------------
+|     Serveur PolyEbay, 3 5 2005, 0:27:6                          |
+|-----------------------------------------------------------------|
+| Connexions: PolyPaypal, client2, client1                        |
+|                                                                 |
+| Nombre de clients connectes = 2                                 |
+| Nom(s) : client2, client1                                       |
+|--------------------                                             |
+| Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0             |
+|                                                                 |
+|                                                                 |
+-------------------------------------------------------------------
+
+PolyPaypal: Deconnection de client2!
+PolyEbay: Deconnection de client2!
+
+PolyPaypal: Deconnection de client1!
+PolyEbay: Deconnection de client1!
+
+
+Client1:
+D:\C++\Cours\Aut2005\INF4402\TP2\class>java Client client1
+Client started...
+Client LocateRegistry...
+Connection sur PolyPaypal...
+Vous etes connecte sur PolyPaypal
+Votre solde est de: 50.0
+Connection sur PolyEbay...
+Vous etes connecte sur PolyEbay
+<2> client(s) sont presentement connectes!
+Vous avez choisi: Java 2
+Java 2: Livre, prix 20.35, Fermeture a 0:26:0
+Vous avez mise 25.0$ sur l'article <Java 2>
+PolyEbay: Haute enchere de l'article <Java 2> = 25.0 a 0:25:31
+PolyEbay: Haute enchere de l'article <Horloge Biologique> = 24.0 a 0:25:35
+Vous avez choisi: Horloge Biologique
+Horloge Biologique: DVD, prix 21.5, Fermeture a 0:27:0
+Vous avez mise 23.0$ sur l'article <Horloge Biologique>
+PolyEbay: Haute enchere de l'article <Horloge Biologique> = 24.0 a 0:25:35
+PolyEbay: Echeance de l'article <Java 2>
+PolyEbay: Felicitation, l'article <Java 2>, prix 25.0$ vous sera envoye par la p
+oste!!!
+Vous avez choisi: Mortal Combat
+Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0
+Vous avez choisi: Horloge Biologique
+Horloge Biologique: DVD, prix 21.5, Fermeture a 0:27:0
+PolyEbay: Echeance de l'article <Horloge Biologique>
+Vous avez choisi: Mortal Combat
+Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0
+Vous avez choisi: Mortal Combat
+Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0
+Fermeture du systeme...
+PolyPaypal: Vous etes deconnecte!
+PolyEbay: Vous etes deconnecte!
+
+Client2:
+D:\C++\Cours\Aut2005\INF4402\TP2\class>java Client client2
+Client started...
+Client LocateRegistry...
+Connection sur PolyPaypal...
+Vous etes connecte sur PolyPaypal
+Votre solde est de: 50.0
+Connection sur PolyEbay...
+Vous etes connecte sur PolyEbay
+<1> client(s) sont presentement connectes!
+Vous avez choisi: Java 2
+Java 2: Livre, prix 20.35, Fermeture a 0:26:0
+Vous avez mise 24.0$ sur l'article <Java 2>
+PolyEbay: Haute enchere de l'article <Java 2> = 24.0 a 0:25:23
+PolyEbay: Haute enchere de l'article <Java 2> = 25.0 a 0:25:31
+Vous avez choisi: Horloge Biologique
+Horloge Biologique: DVD, prix 21.5, Fermeture a 0:27:0
+Vous avez mise 24.0$ sur l'article <Horloge Biologique>
+PolyEbay: Haute enchere de l'article <Horloge Biologique> = 24.0 a 0:25:35
+PolyEbay: Haute enchere de l'article <Horloge Biologique> = 24.0 a 0:25:35
+PolyEbay: Echeance de l'article <Java 2>
+Vous avez choisi: Mortal Combat
+Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0
+Vous avez choisi: Horloge Biologique
+Horloge Biologique: DVD, prix 21.5, Fermeture a 0:27:0
+PolyEbay: Echeance de l'article <Horloge Biologique>
+PolyEbay: Felicitation, l'article <Horloge Biologique>, prix 24.0$ vous sera env
+oye par la poste!!!
+Vous avez choisi: Mortal Combat
+Mortal Combat: DVD, prix 26.87, Fermeture a 18:44:0
+Fermeture du systeme...
+PolyPaypal: Vous etes deconnecte!
+PolyEbay: Vous etes deconnecte!
