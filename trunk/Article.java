@@ -33,6 +33,7 @@ public class Article {
 		this.mises = new Vector<Mise>();
 
 		String today = dateTimeFormat.format(new Date());
+                System.out.println(" today "+today.substring(0,today.length()-8));
 		time_fin = today.substring(0,today.length()-8)+time_fin;
 		try{
 			this.timeFin = dateTimeFormat.parse(time_fin);
@@ -42,7 +43,7 @@ public class Article {
 		}
 		
 		this.timer = new Date((this.timeFin).getTime() - (new Date()).getTime());
-		System.out.println("timer :" +this.timer);
+		System.out.println("timer :"+ (new Date()).getTime());//+this.timer);
 		
 	}
 	
@@ -59,6 +60,7 @@ public class Article {
 	public String getNom(){ return nom;}
         public double getPrix(){ return prixBase;}        
         public String getDateFin(){ return timeFormat.format(timeFin);}
+        //public String getTimeRemaining(){ };
 	
 	public void print(){
 		int i=1;String st;
