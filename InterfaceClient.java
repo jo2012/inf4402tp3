@@ -10,4 +10,5 @@
 import java.rmi.*;
 
 public interface InterfaceClient extends Remote{
+    conect
 }
