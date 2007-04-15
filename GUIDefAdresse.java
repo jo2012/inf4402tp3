@@ -14,8 +14,10 @@ public class GUIDefAdresse extends javax.swing.JFrame {
 
     private String adrPpal;
     
+    private GUIClient maGUI;
     /** Creates new form GUIDefAdresse */
-    public GUIDefAdresse() {
+    public GUIDefAdresse(GUIClient g) {
+        maGUI = g;
         initComponents();
     }
     
@@ -80,6 +82,7 @@ public class GUIDefAdresse extends javax.swing.JFrame {
 // TODO add your handling code here:
         adrEbay = jTextFieldAdresseEbay.getText();
         adrPpal = jTextFieldAdressePayPal.getText();
+        maGUI.connexion2(adrEbay,adrPpal);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
     
@@ -89,7 +92,7 @@ public class GUIDefAdresse extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIDefAdresse().setVisible(true);
+                //new GUIDefAdresse().setVisible(true);
             }
         });
     }
