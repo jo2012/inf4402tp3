@@ -19,8 +19,8 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
 	private Date delaiReseau;
 	private String monIP;
 	private static int port = 1098;
-	public void ImplClient(String nom) throws RemoteException{
-	
+	public ImplClient(String nom) throws RemoteException{
+	super();
 	}
 	
 	public void UpdateClient() throws RemoteException{
