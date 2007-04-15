@@ -23,7 +23,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private String monIp;
     private String IP_EBAY;    
     private String IP_PAYPAL;
-    private Vector<Article> Articles;
+    private ClientConnect cc;
     private Article curArticle;
     private InterfacePolyEbay remotePolyEbay;
     private InterfacePolyPaypal remotePolypaypal;
@@ -59,13 +59,13 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
         IP_PAYPAL = ipPaypal;
         try{
             remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":4500/EBAY");
-            credit = remotePolypaypal.connectClient(nom,monIp);
+            credit = remotePolypaypal.connect(nom);
             if(credit>0){
             remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/EBAY");
-            remotePolyEbay.connectClient(nom,monIp);
+            cc = remotePolyEbay.connectClient(nom,monIp);
+            return cc.isConnected();
             }
             else return false;
-            return true;
         } catch(Exception e) {
             e.printStackTrace();
             return false;
