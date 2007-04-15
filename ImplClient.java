@@ -51,8 +51,36 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
         
     }
     
+    // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est 
+    // spécifié en paramêtre.
+    public boolean connexionEbay(String adresse) {
+        try{
+            remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/EBAY");
+            remotePolyEbay.connectClient(nom,monIP);
+            remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/EBAY");
+            remotePolyEbay.connectClient(nom,monIP);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    
+    // Cette fonction permet la déconnexion au gestionnaire de fichier auquel l'utilisateur està
+    // présentement connecté.
+    public boolean deconnexionEbay() {
+        try{
+            remotePolyEbay.disconnectClient(nom,monIP);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     // Cette fonction arrête le serveur personnel de l'utilisateur
-     public void arreterServeur(){
+     public void arreterServeurPerso(){
         try {
             Naming.unbind("rmi://" + monIP + "/" + nom);
         } catch (MalformedURLException ex) {
