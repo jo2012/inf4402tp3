@@ -10,5 +10,6 @@
 import java.rmi.*;
 
 public interface InterfaceClient extends Remote{
-    conect
+    
+    public void UpdateClient() throws RemoteException;
 }
