@@ -11,7 +11,7 @@
  *
  * @author Yann
  */
-public class ImplPolyEbay {
+public class ImplPolyEbay{
     
     /** Creates a new instance of ImplPolyEbay */
     public ImplPolyEbay() {

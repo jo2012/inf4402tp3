@@ -11,7 +11,7 @@
  *
  * @author Yann
  */
-public class ImplPolyPaypal {
+public class ImplPolyPaypal implements InterfacePolyPaypal{
     
     /** Creates a new instance of ImplPolyPaypal */
     public ImplPolyPaypal() {
