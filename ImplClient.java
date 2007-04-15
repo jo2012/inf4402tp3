@@ -47,8 +47,12 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     
     public String getLogin(){return nom;}
     public void setLogin(String s){ nom = s ;}
+    public void setcurArticle(int i){curArticle = cc.getArticle(i);}
     public Article getcurArticle(){ return curArticle;}
     public Vector<Article> getListArticle(){return cc.getArticles();}
+    public void faireMise(double montant){
+        remotePolyEbay.miserArticle(monIp, curArticle.getNom(), montant);
+    }
     
     public void UpdateClient(Article art) throws RemoteException{
         curArticle = art;
