@@ -1,3 +1,4 @@
+import java.rmi.*;
 /*
  * InterfacePolyPaypal.java
  *
@@ -11,10 +12,14 @@
  *
  * @author Yann
  */
-public class InterfacePolyPaypal {
+public interface InterfacePolyPaypal extends Remote{
     
-    /** Creates a new instance of InterfacePolyPaypal */
-    public InterfacePolyPaypal() {
-    }
+    public double connect(InterfaceClient c) throws RemoteException; 
+    public void disconnect(String client) throws RemoteException; 
+    public InterfacePolyEbay getEbay() throws RemoteException; 
+    public void setEbay(InterfacePolyEbay ebay) throws RemoteException; 
+    public boolean checkCredit(String client) throws RemoteException;
+    public boolean updateCredit(String client, float d) throws RemoteException;
+
     
 }
