@@ -6,6 +6,7 @@
  * @author BRUN Joel & DEBONNEL Yann
  */
 
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 
@@ -18,11 +19,11 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
 	private Date delaiReseau;
 	private String monIP;
 	private static int port = 1098;
-	public void ImplClient(String nom) {
+	public void ImplClient(String nom) throws RemoteException{
 	
 	}
 	
-	public void UpdateClient() {
+	public void UpdateClient() throws RemoteException{
 	
 	}
 }
