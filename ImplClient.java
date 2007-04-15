@@ -55,12 +55,11 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             remotePolyEbay.miserArticle(monIp, curArticle.getNom(), montant);
         } catch (RemoteException ex) {
             ex.printStackTrace();
+            System.err.println("impossible de faire la mise de "+montant);
         }
     }
     
-    public void UpdateClient(Article art) throws RemoteException{
-        curArticle = art;
-    }
+    public void UpdateClient(Article art) throws RemoteException{curArticle = art;}
     
     // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est 
     // spécifié en paramêtre.
