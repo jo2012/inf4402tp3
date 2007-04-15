@@ -67,7 +67,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                         if(UnArt.getNom().compareTo(clientsArticle.get(ip.elementAt(j)))==0)
                             isUse=true;
                     }
-                    if(isUse==false) temp.addArticle(UnArt.getNom());
+                    if(isUse==false) temp.addArticle(UnArt);
                 }
             }
             clientsIp.put(ipClient, nom);
