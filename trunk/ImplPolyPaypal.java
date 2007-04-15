@@ -59,15 +59,15 @@ public class ImplPolyPaypal implements InterfacePolyPaypal{
  * @return double - Valeur du credit du client, -1 si le client n'a plus d'argent
  */
 
-public float connect(InterfaceClient c) throws RemoteException {
+public float connect(String c) throws RemoteException {
     float f = remoteCreditCheck.getClientCredit(c.toString());
     if(f>0){
-        mesClients.put(c.toString(),c);
+        //mesClients.put(c.toString());
         return remoteCreditCheck.getClientCredit(c.toString());} else
             return -1;
 }
 
-public void disconnect(String client) throws RemoteException {
+public void disconnect(String c) throws RemoteException {
 }
 
 public InterfacePolyEbay getEbay() throws RemoteException {
@@ -78,11 +78,11 @@ public void setEbay(InterfacePolyEbay ebay) throws RemoteException {
     remoteEbay = ebay;
 }
 
-public void checkCredit(String c) throws RemoteException {
+public float checkCredit(String c) throws RemoteException {
+    return(remoteCreditCheck.getClientCredit(c));
 }
 
-public void updateCredit(String c, float d) throws RemoteException {
-    remoteCreditCheck.updateClientCredit(c,d);
+public float updateCredit(String c, float d) throws RemoteException {
+    return remoteCreditCheck.updateClientCredit(c,d);
 }
-
     }

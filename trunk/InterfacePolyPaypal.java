@@ -14,10 +14,10 @@ import java.rmi.*;
  */
 public interface InterfacePolyPaypal extends Remote{
     
-    public float connect(InterfaceClient c) throws RemoteException; 
-    public void disconnect(String client) throws RemoteException; 
-    public void checkCredit(String c) throws RemoteException;
-    public void updateCredit(String c, float d) throws RemoteException;
+    public float connect(String c) throws RemoteException; 
+    public void disconnect(String c) throws RemoteException; 
+    public float checkCredit(String c) throws RemoteException;
+    public float updateCredit(String c, float d) throws RemoteException;
 
     
 }
