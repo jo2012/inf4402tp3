@@ -113,18 +113,16 @@ public class GUIClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemConnexionDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConnexionDeconnexionActionPerformed
-// TODO add your handling code here:
-        
+     
         //Connexion 
-        
-        
-        if(!isConnected)
-        String ipEbay = "";
-        while(monLogin=="")
-            monLogin = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
+       if(!isConnected){
+        GUIDefAdresse g = new GUIDefAdresse();
+        g.setVisible(true);
+        while(g.isVisible());
+        monClient.connexionEbay(g.getAdrEbay(),g.getAdrPpal());
+        }
         //Deconnexion 
-        else
-            
+        //else            
     }//GEN-LAST:event_jMenuItemConnexionDeconnexionActionPerformed
     
     /**
