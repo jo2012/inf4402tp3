@@ -11,22 +11,26 @@ import java.util.Vector;
 
 public class ClientConnect implements java.io.Serializable{
 	public boolean isConnected;
-        public Vector<String> article;
+        public Vector<Article> articles;
 	
         
         ClientConnect(boolean b){ 
             this.isConnected = b;
-            article = new Vector<String>();
+            articles = new Vector<Article>();
         }
         
         public boolean isConnected(){return isConnected;}
         
-        public boolean addArticle(String art){
-            return article.add(art);
+        public boolean addArticle(Article art){
+            return articles.add(art);
         }
         
-        public String getArticle(int i){
-            return article.elementAt(i);
+        public Article getArticle(int i){
+            return articles.elementAt(i);
+        }
+        
+        public Vector<Article> getArticles(){
+            return articles;
         }
         
         
