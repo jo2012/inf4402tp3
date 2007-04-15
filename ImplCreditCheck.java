@@ -13,7 +13,7 @@ import java.util.Hashtable;
  *
  * @author Yann
  */
-public class ImplCreditCheck implements InterfaceCrediCheck{
+public class ImplCreditCheck implements InterfaceCreditCheck{
     
     private Hashtable<String, Float> mesClients = new Hashtable<String, Float>();
     private ImplCreditCheck serveurCreditCheck;
@@ -63,9 +63,10 @@ public class ImplCreditCheck implements InterfaceCrediCheck{
      * @param      float d - the variation of the client's credit
      * @return     void
      */
-    public synchronized void updateClientCredit(String c, float d) throws RemoteException {
+    public synchronized float updateClientCredit(String c, float d) throws RemoteException{
         float f = mesClients.get(c);
         f+=d;
         mesClients.put(c, new Float(f));
+        return mesClients.get(c).floatValue();
     }
 }

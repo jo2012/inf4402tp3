@@ -10,5 +10,5 @@ import java.rmi.*;
 
 public interface InterfaceCreditCheck extends Remote{
         public float getClientCredit(String c) throws RemoteException;
-        public void updateClientCredit(String c, float d) throws RemoteException;
+        public float updateClientCredit(String c, float d) throws RemoteException;
 }
