@@ -1,20 +1,22 @@
-/*
+/**
  * InterfacePolyEbay.java
  *
- * Created on April 4, 2007, 10:46 AM
+ * Created on 9 vril 2007
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
+ * @author BRUN Joel & DEBONNEL Yann
  */
 
-/**
- *
- * @author Yann
- */
-public class InterfacePolyEbay {
-    
-    /** Creates a new instance of InterfacePolyEbay */
-    public InterfacePolyEbay() {
-    }
-    
+import java.rmi.*;
+
+
+public interface InterfacePolyEbay extends Remote{
+
+	public List<Article> connectClient(Object String nom, Object String ipClient) throws RemoteException;
+	
+	public boolean disconnectClient(Object String nom, Object String ipClient) throws RemoteException;
+	
+	public boolean addClient(Object String ipClient, Object int idArticle) throws RemoteException;
+	
+	public void miserArticle(Object int idArticle) throws RemoteException;
+	
 }
