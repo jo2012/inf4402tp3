@@ -47,9 +47,11 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     
     public String getLogin(){return nom;}
     public void setLogin(String s){ nom = s ;}
+    public Article getcurArticle(){ return curArticle;}
+    public Vector<Article> getListArticle(){return cc.getArticles();}
     
-    public void UpdateClient() throws RemoteException{
-        
+    public void UpdateClient(Article art) throws RemoteException{
+        curArticle = art;
     }
     
     // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est 

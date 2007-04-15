@@ -11,5 +11,5 @@ import java.rmi.*;
 
 public interface InterfaceClient extends Remote{
     
-    public void UpdateClient() throws RemoteException;
+    public void UpdateClient(Article Art) throws RemoteException;
 }
