@@ -7,16 +7,17 @@
  */
 
 import java.rmi.*;
+import java.util.List;
 
 
 public interface InterfacePolyEbay extends Remote{
 
-	public List<Article> connectClient(Object String nom, Object String ipClient) throws RemoteException;
+	public ClientConnect connectClient(String nom, String ipClient) throws RemoteException;
 	
-	public boolean disconnectClient(Object String nom, Object String ipClient) throws RemoteException;
+	public boolean disconnectClient(String nom, String ipClient) throws RemoteException;
 	
-	public boolean addClient(Object String ipClient, Object int idArticle) throws RemoteException;
+	public boolean addClientArticle(String ipClient, String article) throws RemoteException;
 	
-	public void miserArticle(Object int idArticle) throws RemoteException;
+	public void miserArticle(String ipClient, String article, double montant) throws RemoteException;
 	
 }

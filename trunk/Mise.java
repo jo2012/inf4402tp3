@@ -19,13 +19,13 @@ public class Mise {
 	public Mise(String client, double montant){
 		this.client = client;
 		this.id = ids++;
-		this.dateMise = Date();
+		this.dateMise = new Date();
 		this.montant = montant;
 	}
 	
 	public int getID(){ return id;}
-	public int getClient(){ return client;}
-	public int getMontant(){ return montant;}
+	public String getClient(){ return client;}
+	public double getMontant(){ return montant;}
 	
 	public int print(){		
 		DateFormat timeFormat=DateFormat.getTimeInstance();

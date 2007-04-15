@@ -6,7 +6,11 @@
  * uthor BRUN Joel & DEBONNEL Yann
  */
 
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Vector;
 
 public class Article {
 	public int id;
@@ -14,7 +18,7 @@ public class Article {
 	private String nom;
 	private double prixBase;
 	public double bestMise;
-	private List<Mise> mises;
+	private Vector<Mise> mises;
 	private Date timeFin;
 	private Date timer;
 	
@@ -26,9 +30,9 @@ public class Article {
 		this.nom = nom;
 		this.prixBase = prix;
 		this.bestMise = prix;
-		this.mises = new List<Mise>();
+		this.mises = new Vector<Mise>();
 
-		String today = dateTimeFormat.format(new Date(););
+		String today = dateTimeFormat.format(new Date());
 		time_fin = today.substring(0,today.length()-8)+time_fin;
 		try{
 			this.timeFin = dateTimeFormat.parse(time_fin);
@@ -37,7 +41,7 @@ public class Article {
 			e.printStackTrace();
 		}
 		
-		this.timer = (time_fin = new Date);
+		this.timer = new Date((this.timeFin).getTime() - (new Date()).getTime());
 		System.out.println("timer :" +this.timer);
 		
 	}
@@ -53,25 +57,30 @@ public class Article {
 	}
 	
 	public String getNom(){ return nom;}
+        public double getPrix(){ return prixBase;}        
+        public String getDateFin(){ return timeFormat.format(timeFin);}
 	
 	public void print(){
 		int i=1;String st;
 		if(mises.size()==0) return;
-		for (Iterator ite = mises.iterator(); ite.hasNext() && i<mises.size(); ){
+                Iterator ite = mises.iterator();
+		for (; ite.hasNext() && i<mises.size(); ){
 			st="|mise "+ i +": ";
-			print(st);
-			int len = 50-st.length() - ite.next().print();
+			System.out.print(st);
+                        Mise uneMise = (Mise) ite.next();
+			int len = 50-st.length() - uneMise.print();
 			st="";
 			for (int j=len; j>0; j--) {st+=" ";}
 			st+="|";
-			println(st);
+			System.out.println(st);
 			i++;
 		}
 		st="|derniere mise ";
-		int len = 50-st.length() - ite.next().print();
+                Mise uneMise = (Mise) ite.next();
+		int len = 50-st.length() - uneMise.print();
 		for (int j=len; j>0; j--) {st+=" ";}
 		st+="|";
-		println(st);
+		System.out.println(st);
 		
 	}
 }
