@@ -8,7 +8,9 @@
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -19,8 +21,12 @@ public class Article {
 	private double prixBase;
 	public double bestMise;
 	private Vector<Mise> mises;
-	private Date timeFin;
-	private Date timer;
+	private GregorianCalendar timeFin;
+        private String stTimeFin;
+        private boolean isTimeout;
+        
+        private String month[] = {"janvier","fevrier","mars","avril","mai",
+        "juin","juillet","aout","septembre","octobre","novembre","decembre"};
 	
 	private DateFormat dateTimeFormat=DateFormat.getDateTimeInstance();
 	private	DateFormat timeFormat= DateFormat.getTimeInstance();
@@ -32,19 +38,28 @@ public class Article {
 		this.bestMise = prix;
 		this.mises = new Vector<Mise>();
 
-		String today = dateTimeFormat.format(new Date());
-                System.out.println(" today "+today.substring(0,today.length()-8));
-		time_fin = today.substring(0,today.length()-8)+time_fin;
-		try{
-			this.timeFin = dateTimeFormat.parse(time_fin);
-			System.out.println("time fin:" +this.timeFin);
-		}catch (ParseException e){
-			e.printStackTrace();
-		}
-		
-		this.timer = new Date((this.timeFin).getTime() - (new Date()).getTime());
-		System.out.println("timer :"+ (new Date()).getTime());//+this.timer);
-		
+                this.timeFin = new GregorianCalendar();
+                timeFin.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time_fin.substring(0,2)));
+                timeFin.set(Calendar.MINUTE, Integer.parseInt(time_fin.substring(3,5)));                
+                //timeFin.set(Calendar.SECOND, Integer.parseInt(time_fin.substring(3,5)));
+                timeFin.set(Calendar.SECOND,0);
+                
+                
+                String stToday = timeFin.get(Calendar.DAY_OF_MONTH)+" "+
+                month[timeFin.get(Calendar.MONTH)]+" "+
+                timeFin.get(Calendar.YEAR)+", ";
+                stTimeFin="";
+                int a = timeFin.get(Calendar.HOUR_OF_DAY);
+                if(a<10) stTimeFin+="0"+a+":";         else stTimeFin+=a+":";
+                 a = timeFin.get(Calendar.MINUTE);
+                if(a<10) stTimeFin+="0"+a+":";         else stTimeFin+=a+":";
+                 a = timeFin.get(Calendar.SECOND);
+                if(a<10) stTimeFin+="0"+a;             else stTimeFin+=a;
+                
+                System.out.println(" fin: "+stToday+", "+stTimeFin);
+                if(timeFin.before(new GregorianCalendar()))isTimeout = false;
+                else isTimeout = true;
+                System.out.println(" fin: "+isTimeout);
 	}
 	
 	public synchronized boolean addMise(String client, double montant){
@@ -59,7 +74,7 @@ public class Article {
 	
 	public String getNom(){ return nom;}
         public double getPrix(){ return prixBase;}        
-        public String getDateFin(){ return timeFormat.format(timeFin);}
+        public String getDateFin(){ return stTimeFin;}
         //public String getTimeRemaining(){ };
 	
 	public void print(){
