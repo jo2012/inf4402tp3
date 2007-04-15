@@ -28,16 +28,17 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private InterfacePolyEbay remotePolyEbay;
     private InterfacePolyPaypal remotePolypaypal;
     private Date delaiReseau;
-    private String monIP;
+    private float credit;
     private static int port = 1098;
     
     public ImplClient(String nom) throws RemoteException{
         super();
         monIp ="";
         try {
-            monIP = InetAddress.getLocalHost().getHostAddress();
-            monIP+=":"+port;
+            monIp = InetAddress.getLocalHost().getHostAddress();
+            monIp+=":"+port;
             port++;
+            credit =0;
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
         }
@@ -53,12 +54,17 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     
     // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est 
     // spécifié en paramêtre.
-    public boolean connexionEbay(String adresse) {
+    public boolean connexionEbay(String ipEbay, ipPaypal) {
+        IP_EBAY = ipEbay;
+        IP_PAYPAL = ipPaypal;
         try{
+            remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_ + ":4500/EBAY");
+            credit = remotePolypaypal.connectClient(nom,monIp);
+            if(credit>0){
             remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/EBAY");
-            remotePolyEbay.connectClient(nom,monIP);
-            remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/EBAY");
-            remotePolyEbay.connectClient(nom,monIP);
+            remotePolyEbay.connectClient(nom,monIp);
+            }
+            else return false;
             return true;
         } catch(Exception e) {
             e.printStackTrace();
@@ -71,7 +77,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     // présentement connecté.
     public boolean deconnexionEbay() {
         try{
-            remotePolyEbay.disconnectClient(nom,monIP);
+            remotePolyEbay.disconnectClient(nom,monIp);
             return true;
         } catch(Exception e) {
             e.printStackTrace();
@@ -82,7 +88,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     // Cette fonction arrête le serveur personnel de l'utilisateur
      public void arreterServeurPerso(){
         try {
-            Naming.unbind("rmi://" + monIP + "/" + nom);
+            Naming.unbind("rmi://" + monIp + "/" + nom);
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         } catch (RemoteException ex) {
@@ -111,7 +117,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             System.setSecurityManager(new RMISecurityManager());
         }
         try {
-            Naming.rebind("rmi://" + monIP + "/" + nom, this);
+            Naming.rebind("rmi://" + monIp + "/" + nom, this);
         } catch (RemoteException e1) {
             e1.printStackTrace();
             System.out.println("Probleme d'initialisation du serveur.");
