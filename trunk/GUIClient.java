@@ -1,4 +1,6 @@
 import java.rmi.RemoteException;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 /*
  * GUIClient.java
@@ -14,6 +16,8 @@ public class GUIClient extends javax.swing.JFrame {
     
     private ImplClient monClient;
     private boolean isConnected;
+    private Vector<Article> lesArticles;
+    private javax.swing.table.DefaultTableModel monTableModel;
     
     /** Creates new form GUIClient */
     public GUIClient() {
@@ -26,8 +30,14 @@ public class GUIClient extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         initComponents();
-        updatejTable();    
         isConnected = false;
+        lesArticles = new Vector<Article>();
+        Article a = new Article("A",100.00,"00:00:00");
+        Article b = new Article("B",250.00,"12:45:00");
+        lesArticles.add(a);
+        lesArticles.add(b);
+        updatejTable();    
+     
     }
     
     /** This method is called from within the constructor to
@@ -116,10 +126,8 @@ public class GUIClient extends javax.swing.JFrame {
      
         //Connexion 
        if(!isConnected){
-        GUIDefAdresse g = new GUIDefAdresse();
+        GUIDefAdresse g = new GUIDefAdresse(this);
         g.setVisible(true);
-        while(g.isVisible());
-        monClient.connexionEbay(g.getAdrEbay(),g.getAdrPpal());
         }
         //Deconnexion 
         //else            
@@ -138,15 +146,31 @@ public class GUIClient extends javax.swing.JFrame {
     
     public void updatejTable()
     {
-          jTableArticles.setModel(new javax.swing.table.DefaultTableModel(
+            monTableModel = new javax.swing.table.DefaultTableModel();
+            monTableModel.addColumn("ID#");
+            monTableModel.addColumn("Nom de l'article");
+            monTableModel.addColumn("Prix de base");
+            monTableModel.addColumn("Mise courante");
+            monTableModel.addColumn("Date de fin");
+            for(int i = 0; i<lesArticles.size(); i++)
+                monTableModel.addRow(new Object[] {lesArticles.get(i).id,lesArticles.get(i).getNom(),lesArticles.get(i).getPrix(),lesArticles.get(i).bestMise, lesArticles.get(i).getDateFin()});
+            jTableArticles.setModel(monTableModel);
+            /*jTableArticles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
             },
             new String [] {
                 "ID#", "Nom de l'article", "Prix de base", "Mise courante", "Date de fin"
             }
-        ));
+        ));*/
         
+    }
+
+    void connexion2(String adrEbay, String adrPpal) {
+        if(monClient.connexionEbay(adrEbay,adrPpal)){
+            lesArticles = monClient.getListArticle();
+            updatejTable();
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
