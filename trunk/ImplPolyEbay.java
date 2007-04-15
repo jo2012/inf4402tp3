@@ -14,8 +14,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
@@ -30,6 +32,9 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     private Hashtable<String, InterfaceClient> remoteClients; // ip remote
     private InterfacePolyPaypal remotePolyPaypal;
     private boolean IsPolyPayPal = false;
+    
+     private String month[] = {"janvier","fevrier","mars","avril","mai",
+        "juin","juillet","aout","septembre","octobre","novembre","decembre"};
     
     
     public ImplPolyEbay() throws RemoteException{
@@ -137,10 +142,13 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         DateFormat timeFormat=DateFormat.getTimeInstance();
         DateFormat dateTimeFormat=DateFormat.getDateInstance();
         
-        String today = dateTimeFormat.format(new Date());
-        
+        GregorianCalendar today = new GregorianCalendar();
+        String stToday = today.get(Calendar.DAY_OF_MONTH)+" "+
+                month[today.get(Calendar.MONTH)]+" "+
+                today.get(Calendar.YEAR)+", "+today.get(Calendar.HOUR_OF_DAY)+":"+
+                today.get(Calendar.MINUTE)+":"+today.get(Calendar.SECOND);
         System.out.println("--------------------------------------------------------------");
-        System.out.println("|     Serveur PolyEbay, "+today+"                             |");
+        System.out.println("|     Serveur PolyEbay, "+stToday+"                             |");
         System.out.println("--------------------------------------------------------------");
         if(IsPolyPayPal)  System.out.println("|connexions: PolyPayPal, "+connected+"             |");
         else System.out.println("|connexions: "+connected+"             |");
@@ -216,7 +224,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         InputStreamReader in = new InputStreamReader(System.in);
         String In;
         char[] input = new char[20];
-        while(true){
+        /*while(true){
             System.out.println("\n----------------------- FileManager -----------------------");
             System.out.println("Pour arreter le systeme appuyer sur : q ou Q\n");
             try {
@@ -230,7 +238,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
+        }*/
         
     }
 }
