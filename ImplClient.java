@@ -54,11 +54,11 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     
     // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est 
     // spécifié en paramêtre.
-    public boolean connexionEbay(String ipEbay, ipPaypal) {
+    public boolean connexionEbay(String ipEbay, String ipPaypal) {
         IP_EBAY = ipEbay;
         IP_PAYPAL = ipPaypal;
         try{
-            remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_ + ":4500/EBAY");
+            remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":4500/EBAY");
             credit = remotePolypaypal.connectClient(nom,monIp);
             if(credit>0){
             remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/EBAY");
