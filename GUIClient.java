@@ -61,6 +61,9 @@ public class GUIClient extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldVotreMise = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextFieldMonCredit = new javax.swing.JTextField();
+        jTextFieldTempsActuel = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemConnexionDeconnexion = new javax.swing.JMenuItem();
@@ -103,6 +106,12 @@ public class GUIClient extends javax.swing.JFrame {
 
         jLabel3.setText("Votre mise :");
 
+        jLabel4.setText("Cr\u00e9dit :");
+
+        jTextFieldMonCredit.setEditable(false);
+
+        jTextFieldTempsActuel.setEditable(false);
+
         jMenu1.setText("Menu");
         jMenuItemConnexionDeconnexion.setText("Connexion/D\u00e9connexion");
         jMenuItemConnexionDeconnexion.addActionListener(new java.awt.event.ActionListener() {
@@ -126,7 +135,6 @@ public class GUIClient extends javax.swing.JFrame {
                     .add(layout.createSequentialGroup()
                         .addContainerGap()
                         .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE))
-                    .add(jLabel1)
                     .add(jToolBar2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
@@ -139,7 +147,16 @@ public class GUIClient extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jTextFieldVotreMise, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton2)))
+                        .add(jButton2))
+                    .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jLabel1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jTextFieldTempsActuel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 183, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(30, 30, 30)
+                        .add(jLabel4)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jTextFieldMonCredit, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -147,7 +164,7 @@ public class GUIClient extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .add(jToolBar2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel2)
@@ -158,7 +175,12 @@ public class GUIClient extends javax.swing.JFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel1))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jTextFieldMonCredit, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel4)
+                    .add(jTextFieldTempsActuel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel1))
+                .addContainerGap())
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -166,6 +188,9 @@ public class GUIClient extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:
             lesArticles = monClient.getListArticle();
+            String s = "";
+            s+=monClient.getCredit();
+            jTextFieldMonCredit.setText(s);
             updatejTable();
             if(lesArticles.elementAt(curArticle).IsTimeOut())
                 JOptionPane.showMessageDialog(this, "La periode de mise est ecoule, "+lesArticles.elementAt(curArticle).getLeader()+" remporte les mises.",
@@ -246,6 +271,9 @@ public class GUIClient extends javax.swing.JFrame {
         if(monClient.connexionEbay(adrEbay,adrPpal)){
             lesArticles = monClient.getListArticle();
             updatejTable();
+            String s = "";
+            s+=monClient.getCredit();
+            jTextFieldMonCredit.setText(s);
             isConnected = true;
         }
     }
@@ -268,6 +296,7 @@ public class GUIClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemConnexionDeconnexion;
@@ -275,6 +304,8 @@ public class GUIClient extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableArticles;
     private javax.swing.JTextField jTextFieldMiseCourante;
+    private javax.swing.JTextField jTextFieldMonCredit;
+    private javax.swing.JTextField jTextFieldTempsActuel;
     private javax.swing.JTextField jTextFieldVotreMise;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
