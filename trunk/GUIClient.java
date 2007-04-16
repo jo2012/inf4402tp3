@@ -86,6 +86,13 @@ public class GUIClient extends javax.swing.JFrame {
         jLabel1.setText("Temps actuel : ");
 
         jButton2.setText("Effectuer une mise");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTextFieldMiseCourante.setEditable(false);
 
         jLabel2.setText("Mise Courante :");
 
@@ -150,6 +157,13 @@ public class GUIClient extends javax.swing.JFrame {
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+// TODO add your handling code here:
+        String s = jTextFieldVotreMise.getText();
+        Float f = new Float(s);
+        monClient.faireMise(f);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItemConnexionDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConnexionDeconnexionActionPerformed
      
@@ -216,13 +230,14 @@ public class GUIClient extends javax.swing.JFrame {
     }
 
     public void indexChangeTable(int i) {
-        /*if(lesArticles.get(i).bestMise == null)
-            return;
+        if(i>=0){
         float f = lesArticles.get(i).bestMise;
         String s = "";
         s+=f;
         jTextFieldMiseCourante.setText(s);
-        jTextFieldVotreMise.setText(s);*/
+        jTextFieldVotreMise.setText(s);
+        monClient.setcurArticle(i);
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
