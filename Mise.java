@@ -13,10 +13,10 @@ public class Mise {
 	private static int ids=1;
 	private int id;
 	private String client;
-	private double montant;
+	private float montant;
 	private Date dateMise;
 	
-	public Mise(String client, double montant){
+	public Mise(String client, float montant){
 		this.client = client;
 		this.id = ids++;
 		this.dateMise = new Date();
@@ -25,7 +25,7 @@ public class Mise {
 	
 	public int getID(){ return id;}
 	public String getClient(){ return client;}
-	public double getMontant(){ return montant;}
+	public float getMontant(){ return montant;}
 	
 	public int print(){		
 		DateFormat timeFormat=DateFormat.getTimeInstance();
