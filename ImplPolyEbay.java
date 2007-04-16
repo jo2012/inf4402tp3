@@ -305,10 +305,9 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                         } catch (RemoteException ex) {
                             ex.printStackTrace();
                         }
-                    }
-                    //!!!!!!
-                    //articles.remove(i);
-                    //i--;
+                    }                    
+                    articles.remove(i);
+                    i--;
                 }
             }
             if(articles.size()==0) {
