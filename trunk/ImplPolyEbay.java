@@ -52,7 +52,8 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     
     public synchronized ClientConnect connectClient(String nom, String ipClient) throws RemoteException {
         ClientConnect temp = null;
-        if(clientsIp.containsKey(ipClient)==true || remotePolyPaypal.connect(nom)==-1)
+        //if(clientsIp.containsKey(ipClient)==true || remotePolyPaypal.connect(nom)==-1)
+        if(remotePolyPaypal.connect(nom)==-1)
             temp = new ClientConnect(false);
         else{
             InterfaceClient rC;
