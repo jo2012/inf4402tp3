@@ -5,7 +5,7 @@ setlocal
 ::
 @echo INF4402 - TP3
 
-@echo execution du serveur de POLYEBAY...
+@echo execution du serveur POLYCREDITCHECK...
 
 javac ImplCreditCheck.java
 
