@@ -5,7 +5,7 @@ setlocal
 ::
 @echo INF4402 - TP3
 
-@echo execution du serveur de POLYPAYPAL
+@echo execution du serveur POLYPAYPAL
 
 javac ImplPolyPaypal.java
 

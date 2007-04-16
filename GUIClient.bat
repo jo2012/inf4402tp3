@@ -5,7 +5,7 @@ setlocal
 ::
 @echo INF4402 - TP3
 
-@echo execution du client de POLYEBAY...
+@echo execution du Client...
 
 javac GUIClient.java
 

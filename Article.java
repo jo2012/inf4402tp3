@@ -60,7 +60,7 @@ public class Article {
         if(a<10) stTimeFin+="0"+a;             else stTimeFin+=a;
         
         System.out.println(" fin: "+stToday+stTimeFin);
-        if(timeFin.before(new GregorianCalendar())) isTimeOut = false;
+        if(timeFin.before(new GregorianCalendar())) {isTimeOut = false; }
         else isTimeOut = true;
         System.out.println(" fin: "+isTimeOut);
     }
