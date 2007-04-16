@@ -47,6 +47,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     }
     
     public String getLogin(){return nom;}
+    public float getCredit(){return credit;}
     public void setLogin(String s){ nom = s ;}
     public void setcurArticle(int i){
         curArticle = cc.getArticle(i);
