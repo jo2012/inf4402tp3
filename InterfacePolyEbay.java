@@ -18,6 +18,6 @@ public interface InterfacePolyEbay extends Remote{
 	
 	public boolean addClientArticle(String ipClient, String article) throws RemoteException;
 	
-	public void miserArticle(String ipClient, String article, double montant) throws RemoteException;
+	public void miserArticle(String ipClient, String article, float montant) throws RemoteException;
 	
 }
