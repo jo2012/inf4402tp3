@@ -61,8 +61,8 @@ public class Article  implements java.io.Serializable {
         
         System.out.println(" fin: "+stToday+stTimeFin);
         GregorianCalendar now = new GregorianCalendar();
-        if(timeFin.before(now)) {isTimeOut = false; }
-        else isTimeOut = true;
+        if(timeFin.before(now)) {isTimeOut = true; }
+        else isTimeOut = false;
         System.out.println(" fin: "+isTimeOut);
     }
     
@@ -88,8 +88,9 @@ public class Article  implements java.io.Serializable {
     public String getTimeRemaining(){return timeRemaining;}
     public void setTimeRemaining(){
         timeRemaining = timeFormat.format(new Date(timeFin.getTimeInMillis() - (new GregorianCalendar()).getTimeInMillis()));
-        if(timeFin.before(new GregorianCalendar())) isTimeOut = false;
-        else isTimeOut = true;
+        GregorianCalendar now = new GregorianCalendar();
+        if(timeFin.before(now)) isTimeOut = true;
+        else isTimeOut = false;
     }
     
     
