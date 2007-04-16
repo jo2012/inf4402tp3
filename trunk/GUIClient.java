@@ -81,6 +81,12 @@ public class GUIClient extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableArticles);
 
         jButton1.setText("Mise \u00e0 jour");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jToolBar2.add(jButton1);
 
         jLabel1.setText("Temps actuel : ");
@@ -158,11 +164,17 @@ public class GUIClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+// TODO add your handling code here:
+            lesArticles = monClient.getListArticle();
+            updatejTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 // TODO add your handling code here:
         String s = jTextFieldVotreMise.getText();
         Float f = new Float(s);
-        monClient.faireMise(f);
+        monClient.faireMise(f.floatValue());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItemConnexionDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConnexionDeconnexionActionPerformed
@@ -172,6 +184,13 @@ public class GUIClient extends javax.swing.JFrame {
         GUIDefAdresse g = new GUIDefAdresse(this);
         g.setVisible(true);
         }
+       else
+       {
+         monClient.deconnexionEbay();
+         lesArticles.clear();
+         updatejTable();
+         isConnected = false;
+       }
         //Deconnexion 
         //else            
     }//GEN-LAST:event_jMenuItemConnexionDeconnexionActionPerformed
