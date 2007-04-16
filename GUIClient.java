@@ -23,6 +23,7 @@ public class GUIClient extends javax.swing.JFrame {
     private boolean isConnected;
     private Vector<Article> lesArticles;
     private javax.swing.table.DefaultTableModel monTableModel;
+    private int curArticle= -1;
     
     /** Creates new form GUIClient */
     public GUIClient() {
@@ -37,8 +38,6 @@ public class GUIClient extends javax.swing.JFrame {
         initComponents();
         isConnected = false;
         lesArticles = new Vector<Article>();
-        lesArticles.add(new Article("unLivre",100.00,"18:00:00"));
-        lesArticles.add(new Article("tonLivre",150.00,"22:00:00"));
         createjTable();    
      
     }
@@ -166,9 +165,12 @@ public class GUIClient extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:
-            lesArticles.clear();
             lesArticles = monClient.getListArticle();
             updatejTable();
+            if(lesArticles.elementAt(curArticle).IsTimeOut())
+                JOptionPane.showMessageDialog(this, "La periode de mise est ecoule, "+lesArticles.elementAt(curArticle).getLeader()+" remporte les mises.",
+                    "Message fin de ",JOptionPane.WARNING_MESSAGE);
+                
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -179,7 +181,6 @@ public class GUIClient extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItemConnexionDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConnexionDeconnexionActionPerformed
-     
         //Connexion 
        if(!isConnected){
         GUIDefAdresse g = new GUIDefAdresse(this);
@@ -252,6 +253,7 @@ public class GUIClient extends javax.swing.JFrame {
     public void indexChangeTable(int i) {
         if(i>=0){
         float f = lesArticles.get(i).bestMise;
+        curArticle = i;
         String s = "";
         s+=f;
         jTextFieldMiseCourante.setText(s);
