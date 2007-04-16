@@ -26,7 +26,7 @@ public class ClientConnect implements java.io.Serializable{
         }
         
         public boolean UpdateArticle(int artIndex, Article Art){
-            articles.setElementAt(ArtIndex, Art);
+            articles.setElementAt(Art, artIndex);
             return true;
         }
         
