@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -51,7 +52,7 @@ public class ImplPolyPaypal extends UnicastRemoteObject implements InterfacePoly
         
         try {
             
-            Naming.rebind("rmi://" + "localhost:5000/POLYPAPAL", this);
+            Naming.rebind("rmi://" + "localhost:5000/POLYPAYPAL", this);
             connectCreditCheck();
         } catch (RemoteException e1) {
             e1.printStackTrace();
@@ -73,10 +74,10 @@ public class ImplPolyPaypal extends UnicastRemoteObject implements InterfacePoly
  */
 
 public float connect(String c) throws RemoteException {
-    float f = remoteCreditCheck.getClientCredit(c.toString());
+    float f = remoteCreditCheck.getClientCredit(c);
     if(f>0){
         //mesClients.put(c.toString());
-        return remoteCreditCheck.getClientCredit(c.toString());} else
+        return remoteCreditCheck.getClientCredit(c);} else
             return -1;
 }
 
@@ -112,5 +113,14 @@ public static void main(String args[]) {
     }
 
     private void connectCreditCheck() {
+          try {
+                remoteCreditCheck = (InterfaceCreditCheck) Naming.lookup("//" + "localhost:6000" + "/" + "CREDITCHECK");
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            } catch (MalformedURLException ex) {
+                ex.printStackTrace();
+            } catch (NotBoundException ex) {
+                ex.printStackTrace();
+            }
     }
 }
