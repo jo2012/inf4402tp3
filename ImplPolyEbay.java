@@ -16,13 +16,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Timer;
 import java.util.Vector;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
 
-public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEbay {
+public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEbay, Runnable {
     private Vector<Article> articles;
     private Vector<String> clients;
     private Hashtable<String, String> clientsArticle; // ip article
@@ -30,9 +31,10 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     private Hashtable<String, InterfaceClient> remoteClients; // ip remote
     private InterfacePolyPaypal remotePolyPaypal;
     private boolean IsPolyPayPal = false;
+    private Timer timer;
     
-     private String month[] = {"janvier","fevrier","mars","avril","mai",
-        "juin","juillet","aout","septembre","octobre","novembre","decembre"};
+    private String month[] = {"janvier","fevrier","mars","avril","mai",
+    "juin","juillet","aout","septembre","octobre","novembre","decembre"};
     
     
     public ImplPolyEbay() throws RemoteException{
@@ -46,11 +48,21 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     
     public ClientConnect connectClient(String nom, String ipClient) throws RemoteException {
         ClientConnect temp = null;
-        if(clientsIp.containsKey(ipClient)==true)
+        if(clientsIp.containsKey(ipClient)==true || remotePolyPaypal.connect(nom)==-1)
             temp = new ClientConnect(false);
         else{
-            ///  InterfaceClient rC = new InterfaceClient();
-            ///  remoteClients.put(ipClient, rC);
+            InterfaceClient rC;
+            try {
+                rC = (InterfaceClient) Naming.lookup("//" + ipClient + "/" + nom);
+                remoteClients.put(ipClient, rC);
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            } catch (MalformedURLException ex) {
+                ex.printStackTrace();
+            } catch (NotBoundException ex) {
+                ex.printStackTrace();
+            }
+            
             temp = new ClientConnect(true);
             
             
@@ -95,20 +107,31 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         } else return false;
     }
     
-    public void miserArticle(String ipClient, String article, double montant) throws RemoteException {
+    public void miserArticle(String ipClient, String article, float montant) throws RemoteException {
+        boolean isArt = false;
+        Article unArt ;
         if(clientsArticle.get(ipClient).compareTo(article)==0){
-            for(Iterator ite = articles.iterator(); ite.hasNext();){
-                Article unArt = (Article) ite.next();
+            for(Iterator ite = articles.iterator(); ite.hasNext() && !isArt ; ){
+                unArt = (Article) ite.next();
                 if(unArt.getNom().compareTo(article)==0){
-                    if(unArt.addMise(clientsIp.get(ipClient),montant)==true)
+                    isArt = true;
+                    if(unArt.addMise(clientsIp.get(ipClient),montant)==true){
                         System.out.println("mise effectuer avec succes: "+article+" "+ montant);
-                    else
+                        for(Enumeration e = remoteClients.keys(); e.hasMoreElements(); ){
+                            String unIp = (String) e.nextElement();
+                            if(clientsArticle.get(unIp).compareTo(article)==0){
+                                remoteClients.get(unIp).UpdateClient(unArt);
+                            }
+                        }
+                    } else
                         System.out.println("mise erreur : "+article+" "+ montant);
                 }
             }
             //printInfo();
         }
     }
+    
+    
     
     public boolean addArticle(String nom, double prix, String time_fin){
         boolean isAdded=false;
@@ -176,7 +199,17 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         }
     }
     
-    public void demarrerServeur() {
+    public void demarrerServeur(String IP_PAYPAL) {
+        try {
+            remotePolyPaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":4500/POLYPAYPAL");
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        } catch (NotBoundException ex) {
+            ex.printStackTrace();
+        }
+        
         /* try{
             java.rmi.registry.LocateRegistry.createRegistry(4500);
             System.out.println("Registre cree sur le port 4500");
@@ -215,7 +248,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     public static void main(String args[]) throws RemoteException{
         ImplPolyEbay polyEbay;
         polyEbay = new ImplPolyEbay();
-        polyEbay.demarrerServeur();
+        polyEbay.demarrerServeur(args[0]);
         polyEbay.addArticle("livre java 1", 19.99, "18:00:00");
         polyEbay.addArticle("livre c++ 1", 29.99, "19:00:00");
         polyEbay.addArticle("livre philo 1", 40.99, "18:30:00");
@@ -223,7 +256,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         InputStreamReader in = new InputStreamReader(System.in);
         String In;
         char[] input = new char[20];
-        /*while(true){
+        while(true){
             System.out.println("\n----------------------- FileManager -----------------------");
             System.out.println("Pour arreter le systeme appuyer sur : q ou Q\n");
             try {
@@ -237,7 +270,34 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }*/
+            try {
+                Thread.sleep(5000);
+                polyEbay.printInfo();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            
+        }//*/
         
+    }
+    
+    public void run() {
+        try {
+            Thread.sleep(60000);
+            for(int i=0; i<articles.size();i++){
+                Article art = articles.elementAt(i);
+                art.setTimeRemaining();
+                if(art.IsTimeOut() && art.getLeader().compareTo("")!=0){
+                    try {                        
+                        remotePolyPaypal.updateCredit(art.getLeader(), art.getbestMise());
+                    } catch (RemoteException ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                }
+            }
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
