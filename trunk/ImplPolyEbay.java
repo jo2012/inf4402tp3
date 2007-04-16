@@ -81,7 +81,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                     }
                 }
                 
-                for(int i=0; i<articles.size() && ip.isEmpty()==false; i++){
+                for(int i=0; i<articles.size() && clientsArticle.isEmpty()==false; i++){
                     boolean isUse=false;
                     Article UnArt = articles.elementAt(i);
                     for(int j=0; j<ip.size() && isUse==false; j++){
@@ -101,6 +101,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
             clientsArticle.remove(ipClient);
             clientsIp.remove(ipClient);
             remoteClients.remove(ipClient);
+        
             return true;
         } else return false;
     }
@@ -300,8 +301,9 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                             ex.printStackTrace();
                         }
                     }
-                    articles.remove(i);
-                    i--;
+                    //!!!!!!
+                    //articles.remove(i);
+                    //i--;
                 }
             }
             if(articles.size()==0) {

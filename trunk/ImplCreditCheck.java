@@ -54,9 +54,8 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
      * @return     float - the value of the client's credit
      */
     public float getClientCredit(String c) throws RemoteException {
-        //System.out.println("Obtention du credit de :" + c );
-        //return (mesClients.get(c)).floatValue();
-        return 50;
+        System.out.println("Obtention du credit de :" + c );
+        return (mesClients.get(c)).floatValue();
     }
     
     /**

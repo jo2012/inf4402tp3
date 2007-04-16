@@ -39,7 +39,7 @@ public class GUIClient extends javax.swing.JFrame {
         lesArticles = new Vector<Article>();
         lesArticles.add(new Article("unLivre",100.00,"18:00:00"));
         lesArticles.add(new Article("tonLivre",150.00,"22:00:00"));
-        updatejTable();    
+        createjTable();    
      
     }
     
@@ -175,7 +175,14 @@ public class GUIClient extends javax.swing.JFrame {
     
     public void updatejTable()
     {       
-            
+        while(monTableModel.getRowCount() > 0)
+            monTableModel.removeRow(0);
+        for(int i = 0; i<lesArticles.size(); i++)
+                monTableModel.addRow(new Object[] {lesArticles.get(i).id,lesArticles.get(i).getNom(),lesArticles.get(i).getPrix(),lesArticles.get(i).bestMise, lesArticles.get(i).getDateFin()});
+    }
+
+    public void createjTable()
+    {
             monTableModel = new javax.swing.table.DefaultTableModel();
             monTableModel.addColumn("ID#");
             monTableModel.addColumn("Nom de l'article");
@@ -198,25 +205,8 @@ public class GUIClient extends javax.swing.JFrame {
                     }
                 }
             });
-            /*list = new JList();
-            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            list.setDragEnabled(false);
-            ListSelectionModel listSelectionModel = list.getSelectionModel();
-            listSelectionModel.addListSelectionListener(
-                            new SharedListSelectionHandler(this));
-            jTableArticles.setSelectionModel(listSelectionModel);*/
-        
-            /*jTableArticles.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-            },
-            new String [] {
-                "ID#", "Nom de l'article", "Prix de base", "Mise courante", "Date de fin"
-            }
-        ));*/
-        
     }
-
+    
     void connexion2(String adrEbay, String adrPpal) {
         if(monClient.connexionEbay(adrEbay,adrPpal)){
             lesArticles = monClient.getListArticle();
@@ -226,11 +216,13 @@ public class GUIClient extends javax.swing.JFrame {
     }
 
     public void indexChangeTable(int i) {
+        /*if(lesArticles.get(i).bestMise == null)
+            return;
         float f = lesArticles.get(i).bestMise;
         String s = "";
         s+=f;
         jTextFieldMiseCourante.setText(s);
-        jTextFieldVotreMise.setText(s);
+        jTextFieldVotreMise.setText(s);*/
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
