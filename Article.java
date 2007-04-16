@@ -25,7 +25,8 @@ public class Article  implements java.io.Serializable {
     private GregorianCalendar timeFin;
     private String stTimeFin;
     private boolean isTimeOut;
-    private String timeRemaining;
+    private String timeRemaining;    
+    private String timeServeur;
     
     private String month[] = {"janvier","fevrier","mars","avril","mai",
     "juin","juillet","aout","septembre","octobre","novembre","decembre"};
@@ -85,12 +86,20 @@ public class Article  implements java.io.Serializable {
     public float getbestMise(){ return bestMise;}
     public String getLeader(){ return leader;}
     public String getDateFin(){ return stTimeFin;}
+    public String getHeureServeur(){ return timeServeur;}    
     public String getTimeRemaining(){return timeRemaining;}
     public void setTimeRemaining(){
         timeRemaining = timeFormat.format(new Date(timeFin.getTimeInMillis() - (new GregorianCalendar()).getTimeInMillis()));
         GregorianCalendar now = new GregorianCalendar();
         if(timeFin.before(now)) isTimeOut = true;
-        else isTimeOut = false;
+        else isTimeOut = false; 
+        
+        int a = now.get(Calendar.HOUR_OF_DAY);
+        if(a<10) timeServeur+="0"+a+":";         else timeServeur+=a+":";
+        a = now.get(Calendar.MINUTE);
+        if(a<10) timeServeur+="0"+a+":";         else timeServeur+=a+":";
+        a = now.get(Calendar.SECOND);
+        if(a<10) timeServeur+="0"+a;             else timeServeur+=a;
     }
     
     
