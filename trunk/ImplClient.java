@@ -46,30 +46,43 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     
     public String getLogin(){return nom;}
     public void setLogin(String s){ nom = s ;}
-    public void setcurArticle(int i){curArticle = cc.getArticle(i);}
+    public void setcurArticle(int i){
+        curArticle = cc.getArticle(i);
+        try {
+            remotePolyEbay.addClientArticle(monIp, curArticle.getNom());
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+            System.err.println("probleme lors du choix de l'article de mise "+curArticle.getNom());
+        }
+    }
     public Article getcurArticle(){ return curArticle;}
     public Vector<Article> getListArticle(){return cc.getArticles();}
+    
     public void faireMise(double montant){
         try {
-            remotePolyEbay.miserArticle(monIp, curArticle.getNom(), montant);
+            remotePolyEbay.miserArticle(monIp, curArticle.getNom(), (float)montant);
         } catch (RemoteException ex) {
             ex.printStackTrace();
             System.err.println("impossible de faire la mise de "+montant);
         }
     }
     
-    public void UpdateClient(Article art) throws RemoteException{curArticle = art;}
+    public void UpdateClient(Article art) throws RemoteException{
+        curArticle = art;
+        credit = remotePolypaypal.checkCredit(nom);
+    }
     
     // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est 
     // spécifié en paramêtre.
     public boolean connexionEbay(String ipEbay, String ipPaypal) {
         IP_EBAY = ipEbay;
         IP_PAYPAL = ipPaypal;
+        demarrerServeurPerso();
         try{
-            remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":4500/EBAY");
+            remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":4500/POLYPAYPAL");
             credit = remotePolypaypal.connect(nom);
             if(credit>0){
-            remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/EBAY");
+            remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/POLYEBAY");
             cc = remotePolyEbay.connectClient(nom,monIp);
             return cc.isConnected();
             }
