@@ -18,8 +18,9 @@ public class Article {
     public int id;
     private static int ids = 1;
     private String nom;
-    private double prixBase;
-    public double bestMise;
+    private float prixBase;
+    public float bestMise;
+    public String leader;
     private Vector<Mise> mises;
     private GregorianCalendar timeFin;
     private String stTimeFin;
@@ -35,15 +36,16 @@ public class Article {
     public Article(String nom, double prix, String time_fin){
         this.id=ids++;
         this.nom = nom;
-        this.prixBase = prix;
-        this.bestMise = prix;
+        this.prixBase = (float) prix;
+        this.bestMise = (float) prix;
+        this.leader = "";
         this.mises = new Vector<Mise>();
         
         this.timeFin = new GregorianCalendar();
         timeFin.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time_fin.substring(0,2)));
         timeFin.set(Calendar.MINUTE, Integer.parseInt(time_fin.substring(3,5)));
         //timeFin.set(Calendar.SECOND, Integer.parseInt(time_fin.substring(3,5)));
-        timeFin.set(Calendar.SECOND,0);        
+        timeFin.set(Calendar.SECOND,0);
         
         String stToday = timeFin.get(Calendar.DAY_OF_MONTH)+" "+
                 month[timeFin.get(Calendar.MONTH)]+" "+
@@ -63,8 +65,9 @@ public class Article {
         System.out.println(" fin: "+isTimeOut);
     }
     
-    public synchronized boolean addMise(String client, double montant){
+    public synchronized boolean addMise(String client, float montant){
         if(!IsTimeOut() && montant>bestMise){
+            leader = client;
             bestMise = montant;
             Mise uneMise = new Mise(client, montant);
             mises.add(uneMise);
@@ -74,16 +77,19 @@ public class Article {
     }
     
     public boolean IsTimeOut(){
-        if(timeFin.before(new GregorianCalendar())) isTimeOut = false;
-        else isTimeOut = true;
         return isTimeOut;
     }
     public String getNom(){ return nom;}
-    public double getPrix(){ return prixBase;}
+    public float getPrix(){ return prixBase;}
+    public float getbestMise(){ return bestMise;}
+    public String getLeader(){ return leader;}
     public String getDateFin(){ return stTimeFin;}
     public String getTimeRemaining(){return timeRemaining;}
-    public void setTimeRemaining(){ 
-        timeRemaining = timeFormat.format(new Date(timeFin.getTimeInMillis() - (new GregorianCalendar()).getTimeInMillis()));}
+    public void setTimeRemaining(){
+        timeRemaining = timeFormat.format(new Date(timeFin.getTimeInMillis() - (new GregorianCalendar()).getTimeInMillis()));
+        if(timeFin.before(new GregorianCalendar())) isTimeOut = false;
+        else isTimeOut = true;
+    }
     
     
     public void print(){
