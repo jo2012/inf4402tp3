@@ -30,6 +30,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private Date delaiReseau;
     private float credit;
     private static int port = 1098;
+    private int curArtIndex=-1;
     
     public ImplClient(String n) throws RemoteException{
         super();
@@ -49,6 +50,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     public void setLogin(String s){ nom = s ;}
     public void setcurArticle(int i){
         curArticle = cc.getArticle(i);
+        curArtIndex = i;
         try {
             remotePolyEbay.addClientArticle(monIp, curArticle.getNom());
         } catch (RemoteException ex) {
@@ -70,6 +72,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     
     public void UpdateClient(Article art) throws RemoteException{
         curArticle = art;
+        cc.UpdateArticle(curArtIndex, art);
         credit = remotePolypaypal.checkCredit(nom);
     }
     
