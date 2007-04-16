@@ -28,16 +28,16 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
     public ImplCreditCheck() throws RemoteException {
         //Mise en marche du CreditCheck
         try{
-            java.rmi.registry.LocateRegistry.createRegistry(6000);
-            System.out.println("Registre cree sur le port 6000 pour CreditCheck");
-            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(6000);
-            System.out.println("Registre du port 6000 utilise par CreditCheck");
+            java.rmi.registry.LocateRegistry.createRegistry(4600);
+            System.out.println("Registre cree sur le port 4600 pour CreditCheck");
+            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(4600);
+            System.out.println("Registre du port 4600 utilise par CreditCheck");
             // Créer et installer le gestionnaire de sécurité.
             /*if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new RMISecurityManager());
             }*/
             //serveurCreditCheck = new ImplCreditCheck();
-            Naming.rebind("rmi://" + "localhost:6000" + "/" + "CREDITCHECK", this);
+            Naming.rebind("rmi://" + "localhost:4600" + "/" + "CREDITCHECK", this);
         } catch (Exception e1) {
             e1.printStackTrace();
             System.out.println("Probleme d'initialisation du serveur CreditCheck.");
