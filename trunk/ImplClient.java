@@ -71,7 +71,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     }
     
     public void UpdateClient(Article art) throws RemoteException{
-        curArticle = art;
+        curArticle = art; System.out.println("mise a jour recu");
         cc.UpdateArticle(curArtIndex, art);
         credit = remotePolypaypal.checkCredit(nom);
     }
