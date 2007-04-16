@@ -96,6 +96,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                 }
             }
             clientsIp.put(ipClient, nom);
+            if(clients.contains(nom)) clients.add(nom);
         }
         return temp;
     }
