@@ -137,7 +137,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                         System.out.println("mise erreur : "+article+" "+ montant);
                 }
             }
-            //printInfo();
+            printInfo();
         }
     }
     

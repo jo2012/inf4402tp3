@@ -25,6 +25,11 @@ public class ClientConnect implements java.io.Serializable{
             return articles.add(art);
         }
         
+        public boolean UpdateArticle(int artIndex, Article Art){
+            articles.setElementAt(ArtIndex, Art);
+            return true;
+        }
+        
         public Article getArticle(int i){
             if(isConnected) return articles.elementAt(i);
             else return null;
