@@ -206,7 +206,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     
     public void demarrerServeur(String IP_PAYPAL) {
         try {
-            remotePolyPaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":4500/POLYPAYPAL");
+            remotePolyPaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":5000/POLYPAYPAL");
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         } catch (RemoteException ex) {
@@ -235,8 +235,8 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         }*/
         
         try {
-            
             Naming.rebind("rmi://" + "localhost:4500/POLYEBAY", this);
+            System.out.println("Serveur PolyEBAY fonctionnel @ localhost : 4500");
         } catch (RemoteException e1) {
             e1.printStackTrace();
             System.out.println("Systeme de partage de fichier n'est pas disponible en ce moment");
@@ -253,7 +253,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     public static void main(String args[]) throws RemoteException{
         ImplPolyEbay polyEbay;
         polyEbay = new ImplPolyEbay();
-        //polyEbay.demarrerServeur(args[0]);
+        polyEbay.demarrerServeur("localhost");
         polyEbay.addArticle("livre java 1", 19.99, "18:00:00");
         polyEbay.addArticle("livre c++ 1", 29.99, "19:00:00");
         polyEbay.addArticle("livre philo 1", 40.99, "18:30:00");

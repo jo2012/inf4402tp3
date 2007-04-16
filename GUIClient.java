@@ -37,6 +37,8 @@ public class GUIClient extends javax.swing.JFrame {
         initComponents();
         isConnected = false;
         lesArticles = new Vector<Article>();
+        lesArticles.add(new Article("unLivre",100.00,"18:00:00"));
+        lesArticles.add(new Article("tonLivre",150.00,"22:00:00"));
         updatejTable();    
      
     }
@@ -172,7 +174,8 @@ public class GUIClient extends javax.swing.JFrame {
     }
     
     public void updatejTable()
-    {         
+    {       
+            
             monTableModel = new javax.swing.table.DefaultTableModel();
             monTableModel.addColumn("ID#");
             monTableModel.addColumn("Nom de l'article");
@@ -182,13 +185,26 @@ public class GUIClient extends javax.swing.JFrame {
             for(int i = 0; i<lesArticles.size(); i++)
                 monTableModel.addRow(new Object[] {lesArticles.get(i).id,lesArticles.get(i).getNom(),lesArticles.get(i).getPrix(),lesArticles.get(i).bestMise, lesArticles.get(i).getDateFin()});
             jTableArticles.setModel(monTableModel);
-            list = new JList();
+            ListSelectionModel rowSM = jTableArticles.getSelectionModel();
+            rowSM.addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting())
+                        return;
+                    else
+                    {
+                        ListSelectionModel rowSM = (ListSelectionModel)e.getSource();
+                        int selectedIndex = rowSM.getMinSelectionIndex();
+                        indexChangeTable(selectedIndex);
+                    }
+                }
+            });
+            /*list = new JList();
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             list.setDragEnabled(false);
             ListSelectionModel listSelectionModel = list.getSelectionModel();
             listSelectionModel.addListSelectionListener(
                             new SharedListSelectionHandler(this));
-            jTableArticles.setSelectionModel(listSelectionModel);
+            jTableArticles.setSelectionModel(listSelectionModel);*/
         
             /*jTableArticles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -243,7 +259,10 @@ class SharedListSelectionHandler implements ListSelectionListener {
     {
         monGUI = g;
     }
-    public void valueChanged(ListSelectionEvent e) {
-      monGUI.indexChangeTable(e.getLastIndex());
+    public void valueChanged(ListSelectionEvent e) {    
+      ListSelectionModel rowSM = (ListSelectionModel)e.getSource();
+      int selectedIndex = rowSM.getMinSelectionIndex();  
+      System.out.println(selectedIndex);
+      monGUI.indexChangeTable(selectedIndex);
     }
 }

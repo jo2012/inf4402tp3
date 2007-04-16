@@ -31,9 +31,10 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private float credit;
     private static int port = 1098;
     
-    public ImplClient(String nom) throws RemoteException{
+    public ImplClient(String n) throws RemoteException{
         super();
         monIp ="";
+        nom = n;
         try {
             monIp = InetAddress.getLocalHost().getHostAddress();
             monIp+=":"+port;
@@ -79,7 +80,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
         IP_PAYPAL = ipPaypal;
         demarrerServeurPerso();
         try{
-            remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":4500/POLYPAYPAL");
+            remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":5000/POLYPAYPAL");
             credit = remotePolypaypal.connect(nom);
             if(credit>0){
             remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/POLYEBAY");
@@ -134,9 +135,9 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             e.printStackTrace();
         }
         // Créer et installer le gestionnaire de sécurité.
-        if (System.getSecurityManager() == null) {
+        /*if (System.getSecurityManager() == null) {
             System.setSecurityManager(new RMISecurityManager());
-        }
+        }*/
         try {
             Naming.rebind("rmi://" + monIp + "/" + nom, this);
         } catch (RemoteException e1) {
