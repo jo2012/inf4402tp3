@@ -41,8 +41,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             credit =0;
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
-        }
-            
+        }            
     }
     
     public String getLogin(){return nom;}
