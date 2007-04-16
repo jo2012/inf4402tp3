@@ -1,4 +1,5 @@
 import java.rmi.*;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Hashtable;
 /*
  * ImplCreditCheck.java
@@ -13,7 +14,7 @@ import java.util.Hashtable;
  *
  * @author Yann
  */
-public class ImplCreditCheck implements InterfaceCreditCheck{
+public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCreditCheck{
     
     private Hashtable<String, Float> mesClients = new Hashtable<String, Float>();
     private ImplCreditCheck serveurCreditCheck;
@@ -24,7 +25,7 @@ public class ImplCreditCheck implements InterfaceCreditCheck{
      *
      * @param      void
      */
-    public ImplCreditCheck() {
+    public ImplCreditCheck() throws RemoteException {
         //Mise en marche du CreditCheck
         try{
             java.rmi.registry.LocateRegistry.createRegistry(4500);

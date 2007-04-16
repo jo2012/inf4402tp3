@@ -37,8 +37,6 @@ public class GUIClient extends javax.swing.JFrame {
         initComponents();
         isConnected = false;
         lesArticles = new Vector<Article>();
-        lesArticles.add(a);
-        lesArticles.add(b);
         updatejTable();    
      
     }
@@ -212,7 +210,11 @@ public class GUIClient extends javax.swing.JFrame {
     }
 
     public void indexChangeTable(int i) {
-        Article art_tmp = lesArticles.get(i);
+        float f = lesArticles.get(i).bestMise;
+        String s = "";
+        s+=f;
+        jTextFieldMiseCourante.setText(s);
+        jTextFieldVotreMise.setText(s);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
