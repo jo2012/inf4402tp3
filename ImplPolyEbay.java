@@ -91,7 +91,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                     if(isUse==false) temp.addArticle(UnArt);
                 }
             } else{
-                for(int i=0; i<articles.size() && clientsArticle.isEmpty()==false; i++){
+                for(int i=0; i<articles.size(); i++){
                     temp.addArticle(articles.elementAt(i));
                 }
             }
