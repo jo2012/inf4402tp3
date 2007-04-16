@@ -37,7 +37,7 @@ public class ImplPolyPaypal implements InterfacePolyPaypal{
             if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new RMISecurityManager());
                  }
-        serveurPolyPaypal = new ImplPolyPaypal();
+        serveurPolyPaypal = this;
         Naming.rebind("rmi://" + "localhost" + "/" + "PolyPayPal", serveurPolyPaypal);
     } catch (Exception e) {
         e.printStackTrace();
@@ -85,4 +85,12 @@ public float checkCredit(String c) throws RemoteException {
 public float updateCredit(String c, float d) throws RemoteException {
     return remoteCreditCheck.updateClientCredit(c,d);
 }
+
+public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ImplPolyPaypal();
+            }
+        });
+    }
     }

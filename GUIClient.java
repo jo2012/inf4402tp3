@@ -37,8 +37,6 @@ public class GUIClient extends javax.swing.JFrame {
         initComponents();
         isConnected = false;
         lesArticles = new Vector<Article>();
-        Article a = new Article("A",100.00,"00:00:00");
-        Article b = new Article("B",250.00,"12:45:00");
         lesArticles.add(a);
         lesArticles.add(b);
         updatejTable();    
