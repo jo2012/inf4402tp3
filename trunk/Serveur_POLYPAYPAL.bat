@@ -7,8 +7,8 @@ setlocal
 
 @echo execution du serveur de POLYEBAY...
 
-javac ImplPolyPayPal.java
+javac ImplPolyPaypal.java
 
-java ImplPolyPayPal -Djava.security.policy=security.policy
+java ImplPolyPaypal -Djava.security.policy=security.policy
 
 ::pause
