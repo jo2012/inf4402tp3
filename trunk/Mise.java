@@ -9,17 +9,19 @@
 import java.util.Date;
 import java.text.DateFormat;
 
-public class Mise {
+public class Mise  implements java.io.Serializable {
 	private static int ids=1;
 	private int id;
 	private String client;
 	private float montant;
-	private Date dateMise;
-	
+	//private Date dateMise;
+        private String dateMise;
+	DateFormat timeFormat=DateFormat.getTimeInstance();
+        
 	public Mise(String client, float montant){
 		this.client = client;
 		this.id = ids++;
-		this.dateMise = new Date();
+		this.dateMise = timeFormat.format(new Date());
 		this.montant = montant;
 	}
 	
@@ -28,8 +30,8 @@ public class Mise {
 	public float getMontant(){ return montant;}
 	
 	public int print(){		
-		DateFormat timeFormat=DateFormat.getTimeInstance();
-		String st = montant+"$ par "+client+ " à "+timeFormat.format(dateMise);
+		
+		String st = montant+"$ par "+client+ " à "+dateMise;//timeFormat.format(dateMise);
 		System.out.print(st);
 		return st.length();
 	}
