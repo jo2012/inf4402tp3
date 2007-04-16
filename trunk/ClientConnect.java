@@ -26,11 +26,13 @@ public class ClientConnect implements java.io.Serializable{
         }
         
         public Article getArticle(int i){
-            return articles.elementAt(i);
+            if(isConnected) return articles.elementAt(i);
+            else return null;
         }
         
         public Vector<Article> getArticles(){
-            return articles;
+           if(isConnected) return articles;
+           else return null;
         }
         
         
