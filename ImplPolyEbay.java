@@ -13,14 +13,12 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 
@@ -43,6 +41,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         clientsArticle = new Hashtable<String, String>();
         clientsIp = new Hashtable<String, String>();
         remoteClients = new Hashtable<String, InterfaceClient>();
+        clients = new Vector<String>();
     }
     
     public ClientConnect connectClient(String nom, String ipClient) throws RemoteException {
@@ -122,47 +121,47 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         if(isAdded==false){
             Article unArt = new Article(nom, prix, time_fin);
             articles.add(unArt);
-            //printInfo();
         }
-        ////////////////////// test
+        /*////////////////////// test
         System.out.println("--------------------------");
         System.out.println("articles ajoutes : ");
-        for(Iterator ite = articles.iterator(); ite.hasNext() && isAdded==true;){
+        for(Iterator ite = articles.iterator(); ite.hasNext();){
             Article unArt = (Article) ite.next();
             System.out.println(unArt.getNom());
         }
         System.out.println("--------------------------");
-        //////////////////// fin test
+        //////////////////// fin test*/
+        //printInfo();
         return !isAdded;
     }
     
     public void printInfo(){
-        String connected = clients.toString();
+        String connected = "";
+        if(!clients.isEmpty())
+            connected = clients.toString();
         int nb = clients.size();
-        DateFormat timeFormat=DateFormat.getTimeInstance();
-        DateFormat dateTimeFormat=DateFormat.getDateInstance();
         
         GregorianCalendar today = new GregorianCalendar();
         String stToday = today.get(Calendar.DAY_OF_MONTH)+" "+
                 month[today.get(Calendar.MONTH)]+" "+
                 today.get(Calendar.YEAR)+", "+today.get(Calendar.HOUR_OF_DAY)+":"+
                 today.get(Calendar.MINUTE)+":"+today.get(Calendar.SECOND);
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("|     Serveur PolyEbay, "+stToday+"                             |");
-        System.out.println("--------------------------------------------------------------");
+        System.out.println(" -------------------------------------------------------------");
+        System.out.println("|     Serveur PolyEbay, "+stToday+"   |");
+        System.out.println(" -------------------------------------------------------------");
         if(IsPolyPayPal)  System.out.println("|connexions: PolyPayPal, "+connected+"             |");
         else System.out.println("|connexions: "+connected+"             |");
-        System.out.println("| nombre de clients connectes: "+nb+"                             |");
+        System.out.println("| nombre de clients connectes: "+nb+"                              |");
         System.out.println("| nom(s): "+connected+"                             |");
         for(int i=0; i<articles.size();i++){
             Article unArt = articles.elementAt(i);
-            System.out.println("--------------------------------------------------------------");
+            System.out.println(" -------------------------------------------------------------");
             System.out.println("| Article "+(i+1)+": "+unArt.getNom()+" prix "+unArt.getPrix()
             +", fermeture a "+unArt.getDateFin()+"    |");
             unArt.print();
         }
         System.out.println("|                                                            |");
-        System.out.println("--------------------------------------------------------------");
+        System.out.println(" -------------------------------------------------------------");
     }
     
     public void arreterServeur(){

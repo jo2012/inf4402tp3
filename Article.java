@@ -24,12 +24,13 @@ public class Article {
     private GregorianCalendar timeFin;
     private String stTimeFin;
     private boolean isTimeOut;
+    private String timeRemaining;
     
     private String month[] = {"janvier","fevrier","mars","avril","mai",
     "juin","juillet","aout","septembre","octobre","novembre","decembre"};
     
     private DateFormat dateTimeFormat=DateFormat.getDateTimeInstance();
-    private	DateFormat timeFormat= DateFormat.getTimeInstance();
+    private DateFormat timeFormat= DateFormat.getTimeInstance();
     
     public Article(String nom, double prix, String time_fin){
         this.id=ids++;
@@ -42,12 +43,12 @@ public class Article {
         timeFin.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time_fin.substring(0,2)));
         timeFin.set(Calendar.MINUTE, Integer.parseInt(time_fin.substring(3,5)));
         //timeFin.set(Calendar.SECOND, Integer.parseInt(time_fin.substring(3,5)));
-        timeFin.set(Calendar.SECOND,0);
-        
+        timeFin.set(Calendar.SECOND,0);        
         
         String stToday = timeFin.get(Calendar.DAY_OF_MONTH)+" "+
                 month[timeFin.get(Calendar.MONTH)]+" "+
                 timeFin.get(Calendar.YEAR)+", ";
+        
         stTimeFin="";
         int a = timeFin.get(Calendar.HOUR_OF_DAY);
         if(a<10) stTimeFin+="0"+a+":";         else stTimeFin+=a+":";
@@ -56,17 +57,18 @@ public class Article {
         a = timeFin.get(Calendar.SECOND);
         if(a<10) stTimeFin+="0"+a;             else stTimeFin+=a;
         
-        System.out.println(" fin: "+stToday+", "+stTimeFin);
+        System.out.println(" fin: "+stToday+stTimeFin);
         if(timeFin.before(new GregorianCalendar())) isTimeOut = false;
         else isTimeOut = true;
         System.out.println(" fin: "+isTimeOut);
     }
     
     public synchronized boolean addMise(String client, double montant){
-        if(!isTimeOut && montant>bestMise){
+        if(!IsTimeOut() && montant>bestMise){
             bestMise = montant;
             Mise uneMise = new Mise(client, montant);
             mises.add(uneMise);
+            setTimeRemaining();
             return true;
         } else return false;
     }
@@ -79,6 +81,10 @@ public class Article {
     public String getNom(){ return nom;}
     public double getPrix(){ return prixBase;}
     public String getDateFin(){ return stTimeFin;}
+    public String getTimeRemaining(){return timeRemaining;}
+    public void setTimeRemaining(){ 
+        timeRemaining = timeFormat.format(new Date(timeFin.getTimeInMillis() - (new GregorianCalendar()).getTimeInMillis()));}
+    
     
     public void print(){
         int i=1;String st;
