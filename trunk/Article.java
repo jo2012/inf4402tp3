@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Vector;
 
-public class Article {
+public class Article  implements java.io.Serializable {
     public int id;
     private static int ids = 1;
     private String nom;
