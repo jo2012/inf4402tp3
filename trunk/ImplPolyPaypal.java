@@ -1,3 +1,4 @@
+import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
@@ -26,23 +27,38 @@ public class ImplPolyPaypal implements InterfacePolyPaypal{
     public ImplPolyPaypal() {
         mesClients = new Hashtable<String,InterfaceClient>();
         
-        //Démarrage du serveur PoyPayPal
+        // Create and install a security manager
+        if (System.getSecurityManager() == null) {
+            System.setSecurityManager(new SecurityManager());
+        }      
+        
         try{
-            java.rmi.registry.LocateRegistry.createRegistry(1098);
-            System.out.println("Registre cree sur le port 1098 pour le serveur PolyPayPal");
-            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(1098);
-            System.out.println("Registre du port 1098 utilise pour le serveur PolyPayPal");
-       
-            // Créer et installer le gestionnaire de sécurité.
-            if (System.getSecurityManager() == null) {
-                System.setSecurityManager(new RMISecurityManager());
-                 }
-        serveurPolyPaypal = this;
-        Naming.rebind("rmi://" + "localhost" + "/" + "PolyPayPal", serveurPolyPaypal);
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println("Probleme d'initialisation du serveur PolyPaypal");
-    }
+            java.rmi.registry.LocateRegistry.createRegistry(5000);
+            System.out.println("Registre cree sur le port 5000 pour PayPal");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(5000);
+            System.out.println("Registre utilise sur le port 5000 pour PayPal");
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            e.printStackTrace();
+        }
+        
+        try {            
+            Naming.rebind("rmi://" + "localhost:5000/POLYPAYPAL", this);
+        } catch (RemoteException e1) {
+            e1.printStackTrace();
+            System.out.println("Systeme de partage de fichier n'est pas disponible en ce moment");
+            System.out.println("Veuillez reessayer la connection ulterieurement");
+            System.exit(0);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            System.out.println("Systeme de partage de fichier n'est pas disponible en ce moment");
+            System.out.println("Veuillez reessayer la connection ulterieurement");
+            System.exit(0);
+        }
     
     //Connection au CreditCheck
     try{
