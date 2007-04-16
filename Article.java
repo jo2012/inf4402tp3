@@ -95,11 +95,11 @@ public class Article  implements java.io.Serializable {
         else isTimeOut = false; 
         
         int a = now.get(Calendar.HOUR_OF_DAY);
-        if(a<10) timeServeur+="0"+a+":";         else timeServeur+=a+":";
+        if(a<10) timeServeur+="0"+a+":";     else timeServeur+=a+":";
         a = now.get(Calendar.MINUTE);
-        if(a<10) timeServeur+="0"+a+":";         else timeServeur+=a+":";
+        if(a<10) timeServeur+="0"+a+":";     else timeServeur+=a+":";
         a = now.get(Calendar.SECOND);
-        if(a<10) timeServeur+="0"+a;             else timeServeur+=a;
+        if(a<10) timeServeur+="0"+a;         else timeServeur+=a;
     }
     
     

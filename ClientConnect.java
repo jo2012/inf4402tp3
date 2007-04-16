@@ -30,6 +30,7 @@ public class ClientConnect implements java.io.Serializable{
             return true;
         }
         
+        public String getTimeServeur(int index){return articles.elementAt(index).getHeureServeur();}
         public Article getArticle(int i){
             if(isConnected) return articles.elementAt(i);
             else return null;
