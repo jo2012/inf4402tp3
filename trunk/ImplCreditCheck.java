@@ -34,7 +34,7 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
             System.out.println("Registre du port 4600 utilise par CreditCheck");
             // Créer et installer le gestionnaire de sécurité.
             if (System.getSecurityManager() == null) {
-                System.setSecurityManager(new RMISecurityManager());
+                System.setSecurityManager(new SecurityManager());
             }
             Naming.rebind("rmi://" + "localhost:4600" + "/" + "CREDITCHECK", this);
 	   		System.out.println("Serveur CREDITCHECK est pret.");
