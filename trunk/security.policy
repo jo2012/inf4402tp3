@@ -1,3 +1,6 @@
-grant codebase "/"{
-    permission java.security.AllPermission;
+/* Nom du Fichier:	policy 
+ * Auteurs: 	    BRUN Joel & DEBONNEL Yann
+ */
+ 
+grant {    permission java.security.AllPermission;
 };
