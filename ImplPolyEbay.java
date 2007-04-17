@@ -60,7 +60,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
             try {
                 rC = (InterfaceClient) Naming.lookup("//" + ipClient + "/" + nom);
                 remoteClients.put(ipClient, rC);
-		System.out.println("Connection du client "+nom+ " @ " + ipClient);
+                System.out.println("Connection du client "+nom+ " @ " + ipClient);
             } catch (RemoteException ex) {
                 ex.printStackTrace();
             } catch (MalformedURLException ex) {
@@ -215,7 +215,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     public void demarrerServeur(String IP_PAYPAL) {
         try {
             remotePolyPaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":5000/POLYPAYPAL");
-		System.out.println("Connection au serveur PAYPAL etablie.");
+            System.out.println("Connection au serveur PAYPAL etablie.");
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         } catch (RemoteException ex) {
@@ -263,9 +263,9 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         ImplPolyEbay polyEbay;
         polyEbay = new ImplPolyEbay();
         polyEbay.demarrerServeur("localhost");
-        polyEbay.addArticle("livre java 1", 19.99, "22:20:00");
-        polyEbay.addArticle("livre c++ 1", 29.99, "23:15:00");
-        polyEbay.addArticle("livre philo 1", 40.99, "23:30:00");
+        polyEbay.addArticle("livre java 1", 19.99, "20:56:00");
+        polyEbay.addArticle("livre c++ 1", 29.99, "21:00:00");
+        polyEbay.addArticle("livre philo 1", 40.99, "21:05:00");
         
         InputStreamReader in = new InputStreamReader(System.in);
         String In;
@@ -304,16 +304,22 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                     if(art.getLeader().compareTo("")!=0){
                         try {
                             remotePolyPaypal.updateCredit(art.getLeader(), art.getbestMise());
-                        } catch (RemoteException ex) {
-                            ex.printStackTrace();
-                        }
-                    }                    
+                            
+                            for(Enumeration e1 = clientsArticle.keys(); e1.hasMoreElements();){
+                                String ip = (String) e1.nextElement();
+                                if(clientsArticle.get(ip).compareTo(art.getNom())==0){
+                                    remoteClients.get(ip).UpdateClient(art);
+                                }
+                            } }catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }
+                    }
                     articles.remove(i);
                     i--;
                 }
             }
             if(articles.size()==0) {
-                isThreadActive=false; t_listener = null; 
+                isThreadActive=false; t_listener = null;
             } else{
                 try {
                     t_listener.sleep(60000);

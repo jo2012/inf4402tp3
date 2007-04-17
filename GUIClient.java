@@ -24,6 +24,8 @@ public class GUIClient extends javax.swing.JFrame {
     private Vector<Article> lesArticles;
     private javax.swing.table.DefaultTableModel monTableModel;
     private int curArticle= -1;
+    private int maSelection= -1;
+    private boolean mise = false;
     
     /** Creates new form GUIClient */
     public GUIClient() {
@@ -53,10 +55,10 @@ public class GUIClient extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableArticles = new javax.swing.JTable();
         jToolBar2 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
+        jButtonMiseAJour = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jButtonEffectuerMise = new javax.swing.JButton();
         jTextFieldMiseCourante = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -88,21 +90,21 @@ public class GUIClient extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableArticles);
 
-        jButton1.setText("Mise \u00e0 jour");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMiseAJour.setText("Mise \u00e0 jour");
+        jButtonMiseAJour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonMiseAJourActionPerformed(evt);
             }
         });
 
-        jToolBar2.add(jButton1);
+        jToolBar2.add(jButtonMiseAJour);
 
         jLabel1.setText("Temps actuel : ");
 
-        jButton2.setText("Effectuer une mise");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEffectuerMise.setText("Effectuer une mise");
+        jButtonEffectuerMise.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonEffectuerMiseActionPerformed(evt);
             }
         });
 
@@ -153,7 +155,7 @@ public class GUIClient extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jTextFieldVotreMise, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton2))
+                        .add(jButtonEffectuerMise))
                     .add(layout.createSequentialGroup()
                         .addContainerGap()
                         .add(jLabel1)
@@ -177,7 +179,7 @@ public class GUIClient extends javax.swing.JFrame {
                     .add(jTextFieldMiseCourante, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel3)
                     .add(jTextFieldVotreMise, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jButton2))
+                    .add(jButtonEffectuerMise))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -198,25 +200,29 @@ public class GUIClient extends javax.swing.JFrame {
          isConnected = false;
     }//GEN-LAST:event_formWindowClosing
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-// TODO add your handling code here:
+    private void jButtonMiseAJourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMiseAJourActionPerformed
+
             lesArticles = monClient.getListArticle();
             String s = "";
             s+=monClient.getCredit();
             jTextFieldMonCredit.setText(s);
             updatejTable();
-            if(lesArticles.elementAt(curArticle).IsTimeOut())
+            if(monClient.getcurArticle().IsTimeOut())
                 JOptionPane.showMessageDialog(this, "La periode de mise est ecoule, "+lesArticles.elementAt(curArticle).getLeader()+" remporte les mises.",
-                    "Message fin de ",JOptionPane.WARNING_MESSAGE);
+                    "Message fin Mise",JOptionPane.WARNING_MESSAGE);
                 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonMiseAJourActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonEffectuerMiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEffectuerMiseActionPerformed
 // TODO add your handling code here:
         String s = jTextFieldVotreMise.getText();
         Float f = new Float(s);
-        monClient.faireMise(f.floatValue());
-    }//GEN-LAST:event_jButton2ActionPerformed
+        monClient.setcurArticle(maSelection);
+        if(!monClient.getcurArticle().IsTimeOut()){            
+            monClient.faireMise(f.floatValue());
+        }
+        else{ JOptionPane.showMessageDialog(this, "cet item est deja expire", "Avertissement",JOptionPane.WARNING_MESSAGE);}
+    }//GEN-LAST:event_jButtonEffectuerMiseActionPerformed
 
     private void jMenuItemConnexionDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConnexionDeconnexionActionPerformed
         //Connexion 
@@ -299,13 +305,13 @@ public class GUIClient extends javax.swing.JFrame {
         s+=f;
         jTextFieldMiseCourante.setText(s);
         jTextFieldVotreMise.setText(s);
-        monClient.setcurArticle(i);
+            maSelection = i;
         }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonEffectuerMise;
+    private javax.swing.JButton jButtonMiseAJour;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
