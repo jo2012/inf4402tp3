@@ -38,7 +38,7 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
             }*/
             //serveurCreditCheck = new ImplCreditCheck();
             Naming.rebind("rmi://" + "localhost:4600" + "/" + "CREDITCHECK", this);
-	   System.out.println("Serveyr CREDITCHECK est pret.");
+	   System.out.println("Serveur CREDITCHECK est pret.");
         } catch (Exception e1) {
             e1.printStackTrace();
             System.out.println("Probleme d'initialisation du serveur CreditCheck.");
@@ -69,7 +69,7 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
     public synchronized float updateClientCredit(String c, float d) throws RemoteException{
         float a, f = mesClients.get(c);
         a = f;
-	f+=d;
+	f-=d;
         mesClients.put(c, new Float(f));
 	 System.out.println("Mise a jour du credit du client " + c + " : " +  a + " -> " + mesClients.get(c).floatValue());
         return mesClients.get(c).floatValue();
