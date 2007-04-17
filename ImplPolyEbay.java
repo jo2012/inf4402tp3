@@ -239,9 +239,9 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         }
         
         // Create and install a security manager
-        /*if (System.getSecurityManager() == null) {
+        if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
-        }*/
+        }
         
         try {
             Naming.rebind("rmi://" + "localhost:4500/POLYEBAY", this);
@@ -262,7 +262,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     public static void main(String args[]) throws RemoteException{
         ImplPolyEbay polyEbay;
         polyEbay = new ImplPolyEbay();
-        polyEbay.demarrerServeur("localhost");
+		polyEbay.demarrerServeur(args[0]);
         polyEbay.addArticle("livre java 1", 19.99, "21:56:00");
         polyEbay.addArticle("livre c++ 1", 29.99, "21:20:00");
         polyEbay.addArticle("livre philo 1", 40.99, "21:25:00");

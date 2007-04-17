@@ -27,7 +27,8 @@ public class ImplPolyPaypal extends UnicastRemoteObject implements InterfacePoly
     private InterfacePolyEbay remoteEbay; //Interface PolyEbay
     private InterfaceCreditCheck remoteCreditCheck; //Interface CreditCheck
     private ImplPolyPaypal serveurPolyPaypal;
-    
+	static private String ipCreditCheck;
+	
     public ImplPolyPaypal() throws RemoteException {
         mesClients = new Hashtable<String,InterfaceClient>();
         
@@ -46,9 +47,9 @@ public class ImplPolyPaypal extends UnicastRemoteObject implements InterfacePoly
         }
         
         // Create and install a security manager
-        /*if (System.getSecurityManager() == null) {
+        if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
-        }*/
+        }
         
         try {
             
@@ -102,6 +103,8 @@ public float updateCredit(String c, float d) throws RemoteException {
 
 public static void main(String args[]) {
                 try {
+					if(args[0]!=null)
+						ipCreditCheck = args[0];
                     new ImplPolyPaypal();
                 } catch (RemoteException ex) {
                     ex.printStackTrace();
@@ -110,9 +113,11 @@ public static void main(String args[]) {
 
     private void connectCreditCheck() {
           try {
-                remoteCreditCheck = (InterfaceCreditCheck) Naming.lookup("//" + "localhost:4600" + "/" + "CREDITCHECK");
-		System.out.println("Connection au serveur CREDITCHECK etablie.");
-            } catch (RemoteException ex) {
+			  System.out.println("Connection @ " + ipCreditCheck);
+			 	remoteCreditCheck = (InterfaceCreditCheck) Naming.lookup("//" + ipCreditCheck + ":4600" + "/" + "CREDITCHECK");
+				System.out.println("Connection au serveur CREDITCHECK etablie.");
+		  	}
+            catch (RemoteException ex) {
                 ex.printStackTrace();
             } catch (MalformedURLException ex) {
                 ex.printStackTrace();

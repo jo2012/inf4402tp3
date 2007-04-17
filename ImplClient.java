@@ -142,9 +142,9 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             e.printStackTrace();
         }
         // Créer et installer le gestionnaire de sécurité.
-        /*if (System.getSecurityManager() == null) {
+        if (System.getSecurityManager() == null) {
             System.setSecurityManager(new RMISecurityManager());
-        }*/
+        }
         try {
             Naming.rebind("rmi://" + monIp + "/" + nom, this);
         } catch (RemoteException e1) {
