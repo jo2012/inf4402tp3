@@ -28,7 +28,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private InterfacePolyPaypal remotePolypaypal;
     private Date delaiReseau;
     private float credit;
-    private int port = 1098;
+    private int port = 0;
     private int curArtIndex=-1;
     
     public ImplClient(String n, int p) throws RemoteException{
