@@ -131,14 +131,14 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     // Cette fonction démarre le serveur personnel de l'utilisateur.
     public void demarrerServeurPerso() {
         try{
-            java.rmi.registry.LocateRegistry.createRegistry(port);
-            System.out.println("Registre cree sur le port "+port);
+            java.rmi.registry.LocateRegistry.createRegistry(port-1);
+            System.out.println("Registre cree sur le port "+port-1);
         } catch(Exception e) {
             //e.printStackTrace();
         }
         try {
-            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(port);
-            System.out.println("Registre du port "+port+" utilise");
+            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(port-1);
+            System.out.println("Registre du port "+port-1+" utilise");
         } catch (Exception e) {
             e.printStackTrace();
         }

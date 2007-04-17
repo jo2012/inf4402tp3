@@ -9,6 +9,7 @@
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.rmi.*;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -238,9 +239,9 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
             e.printStackTrace();
         }
         
-        // Create and install a security manager
+        // Créer et installer le gestionnaire de sécurité.
         if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new SecurityManager());
+            System.setSecurityManager(new RMISecurityManager());
         }
         
         try {
@@ -263,9 +264,11 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         ImplPolyEbay polyEbay;
         polyEbay = new ImplPolyEbay();
 		polyEbay.demarrerServeur(args[0]);
-        polyEbay.addArticle("livre java 1", 19.99, "21:56:00");
-        polyEbay.addArticle("livre c++ 1", 29.99, "21:20:00");
-        polyEbay.addArticle("livre philo 1", 40.99, "21:25:00");
+        polyEbay.addArticle("livre java 1", 19.99, "23:11:00");
+        polyEbay.addArticle("livre c++ 1", 29.99, "23:15:00");
+        polyEbay.addArticle("livre philo 1", 40.99, "23:25:00");
+        polyEbay.addArticle("livre qwer", 29.99, "23:30:00");
+        polyEbay.addArticle("livre resta", 40.99, "23:45:00");
         
         InputStreamReader in = new InputStreamReader(System.in);
         String In;

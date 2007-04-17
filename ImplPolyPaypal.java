@@ -46,9 +46,9 @@ public class ImplPolyPaypal extends UnicastRemoteObject implements InterfacePoly
             e.printStackTrace();
         }
         
-        // Create and install a security manager
+       // Créer et installer le gestionnaire de sécurité.
         if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new SecurityManager());
+            System.setSecurityManager(new RMISecurityManager());
         }
         
         try {
