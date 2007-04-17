@@ -263,9 +263,9 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         ImplPolyEbay polyEbay;
         polyEbay = new ImplPolyEbay();
         polyEbay.demarrerServeur("localhost");
-        polyEbay.addArticle("livre java 1", 19.99, "19:20:00");
-        polyEbay.addArticle("livre c++ 1", 29.99, "20:00:00");
-        polyEbay.addArticle("livre philo 1", 40.99, "21:30:00");
+        polyEbay.addArticle("livre java 1", 19.99, "22:20:00");
+        polyEbay.addArticle("livre c++ 1", 29.99, "23:15:00");
+        polyEbay.addArticle("livre philo 1", 40.99, "23:30:00");
         
         InputStreamReader in = new InputStreamReader(System.in);
         String In;

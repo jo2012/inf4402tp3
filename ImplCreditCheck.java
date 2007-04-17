@@ -38,6 +38,7 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
             }*/
             //serveurCreditCheck = new ImplCreditCheck();
             Naming.rebind("rmi://" + "localhost:4600" + "/" + "CREDITCHECK", this);
+	   System.out.println("Serveyr CREDITCHECK est pret.");
         } catch (Exception e1) {
             e1.printStackTrace();
             System.out.println("Probleme d'initialisation du serveur CreditCheck.");
@@ -54,7 +55,7 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
      * @return     float - the value of the client's credit
      */
     public float getClientCredit(String c) throws RemoteException {
-        System.out.println("Obtention du credit de :" + c );
+        System.out.println("Verification du credit du client " + c + " : " +  mesClients.get(c)).floatValue());
         return (mesClients.get(c)).floatValue();
     }
     
@@ -66,21 +67,19 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
      * @return     void
      */
     public synchronized float updateClientCredit(String c, float d) throws RemoteException{
-        float f = mesClients.get(c);
-        f+=d;
+        float a, f = mesClients.get(c);
+        a = f;
+	f+=d;
         mesClients.put(c, new Float(f));
+	 System.out.println("Mise a jour du credit du client " + c + " : " +  a + " -> "mesClients.get(c)).floatValue());
         return mesClients.get(c).floatValue();
     }
     
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
                 try {
                     new ImplCreditCheck();
                 } catch (RemoteException ex) {
                     ex.printStackTrace();
                 }
-            }
-        });
     }
 }
