@@ -57,7 +57,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             remotePolyEbay.addClientArticle(monIp, curArticle.getNom());
         } catch (RemoteException ex) {
             ex.printStackTrace();
-            System.err.println("probleme lors du choix de l'article de mise "+curArticle.getNom());
+            System.err.println("probleme lors du choix de l'article a miser : "+curArticle.getNom());
         }
     }
     public Article getcurArticle(){ return curArticle;}

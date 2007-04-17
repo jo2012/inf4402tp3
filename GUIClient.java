@@ -69,6 +69,12 @@ public class GUIClient extends javax.swing.JFrame {
         jMenuItemConnexionDeconnexion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+
         jTableArticles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -184,6 +190,13 @@ public class GUIClient extends javax.swing.JFrame {
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    monClient.deconnexionEbay();
+         lesArticles.clear();
+         updatejTable();
+         isConnected = false;
+    }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:

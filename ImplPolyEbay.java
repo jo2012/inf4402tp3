@@ -285,7 +285,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                 ex.printStackTrace();
             }
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
                 polyEbay.printInfo();
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
@@ -313,7 +313,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                 }
             }
             if(articles.size()==0) {
-                isThreadActive=false; t_listener = null; System.err.println("articles vides");
+                isThreadActive=false; t_listener = null; 
             } else{
                 try {
                     t_listener.sleep(60000);
@@ -321,7 +321,6 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                     ex.printStackTrace();
                 }
             }
-            System.err.println("articles "+articles.size());
         }
     }
 }

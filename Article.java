@@ -109,9 +109,9 @@ public class Article  implements java.io.Serializable {
         Iterator ite = mises.iterator();
         for (; ite.hasNext() && i<mises.size(); ){
             st="|mise "+ i +": ";
-            System.out.print(st);
+            System.out.println(st);
             Mise uneMise = (Mise) ite.next();
-            int len = 50-st.length() - uneMise.print();
+            int len = 60-st.length() - uneMise.print();
             st="";
             for (int j=len; j>0; j--) {st+=" ";}
             st+="|";
