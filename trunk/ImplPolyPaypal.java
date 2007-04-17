@@ -115,6 +115,7 @@ public static void main(String args[]) {
     private void connectCreditCheck() {
           try {
                 remoteCreditCheck = (InterfaceCreditCheck) Naming.lookup("//" + "localhost:4600" + "/" + "CREDITCHECK");
+		System.out.println("Connection au serveur CREDITCHECK etablie.");
             } catch (RemoteException ex) {
                 ex.printStackTrace();
             } catch (MalformedURLException ex) {

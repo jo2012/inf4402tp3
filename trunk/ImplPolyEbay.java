@@ -60,6 +60,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
             try {
                 rC = (InterfaceClient) Naming.lookup("//" + ipClient + "/" + nom);
                 remoteClients.put(ipClient, rC);
+		System.out.println("Connection du client "+nom+ " @ " + ipClient);
             } catch (RemoteException ex) {
                 ex.printStackTrace();
             } catch (MalformedURLException ex) {
@@ -214,6 +215,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     public void demarrerServeur(String IP_PAYPAL) {
         try {
             remotePolyPaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":5000/POLYPAYPAL");
+		System.out.println("Connection au serveur PAYPAL etablie.");
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         } catch (RemoteException ex) {
