@@ -1,0 +1,13 @@
+Pour lancer les serveurs PolyEbay,PolyPaypal et CreditCheck, il faut lancer dans l'ordre : 
+
+make all
+
+java -Djava.security.policy = policy ImplCreditCheck 
+java -Djava.security.policy = policy ImplPolyPaypal <Adresse IP du serveur CreditCheck>
+java -Djava.security.policy = policy ImplPolyEbay <Adresse IP du serveur PolyPaypal>	
+
+Le serveur PolyEbay sera initialiser avec des articles a vendre dont l'echeance est assez rapprochee afin de pouvoir rapidement les tests.
+
+Ensuite pour lancer un client, il faut executer la commande
+
+java -Djava.security.policy = policy GUIClient
