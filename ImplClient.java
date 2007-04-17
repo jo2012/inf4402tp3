@@ -133,13 +133,13 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     public void demarrerServeurPerso() {
         try{
             java.rmi.registry.LocateRegistry.createRegistry(port);
-            System.out.println("Registre cree sur le port "+port);
+            System.out.println("Registre cree sur le port :: "+port);
         } catch(Exception e) {
             //e.printStackTrace();
         }
         try {
             java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(port);
-            System.out.println("Registre du port "+port+" utilise");
+            System.out.println("Registre du port "+port+" utilise .");
         } catch (Exception e) {
             e.printStackTrace();
         }
