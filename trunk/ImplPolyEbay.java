@@ -123,18 +123,18 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     public synchronized void miserArticle(String ipClient, String article, float montant) throws RemoteException {
         boolean isArt = false;
         Article unArt ;
-	System.out.println("Client : " + ipClient + " mise " + montant + " sur " + article);
-        /*if(clientsArticle.get(ipClient).compareTo(article)==0){
-            for(Iterator ite = articles.iterator(); ite.hasNext() && !isArt ; ){
-                unArt = (Article) ite.next();
-                if(unArt.getNom().compareTo(article)==0){
-                    isArt = true;
-                    if(unArt.addMise(clientsIp.get(ipClient),montant)==true){
-                        System.out.println("mise effectuer avec succes: "+article+" "+ montant);
-                        for(Enumeration e = remoteClients.keys(); e.hasMoreElements(); ){
-                            String unIp = (String) e.nextElement();
-                            if(clientsArticle.get(unIp).compareTo(article)==0){
-                                remoteClients.get(unIp).UpdateClient(unArt);
+	
+        if(clientsArticle.get(ipClient).compareTo(article)==0){System.out.println(1);
+            for(Iterator ite = articles.iterator(); ite.hasNext() && !isArt ; ){System.out.println(2);
+                unArt = (Article) ite.next();System.out.println(2);
+                if(unArt.getNom().compareTo(article)==0){System.out.println(3);
+                    isArt = true;System.out.println(4);
+                    if(unArt.addMise(clientsIp.get(ipClient),montant)==true){System.out.println(5);
+                        System.out.println("mise effectuer avec succes: "+article+" "+ montant);System.out.println(6);
+                        for(Enumeration e = remoteClients.keys(); e.hasMoreElements(); ){System.out.println(7);
+                            String unIp = (String) e.nextElement();System.out.println(8);
+                            if(clientsArticle.get(unIp).compareTo(article)==0){System.out.println(9);
+                                remoteClients.get(unIp).UpdateClient(unArt);System.out.println(0);
                             }
                         }
                     } else
@@ -142,7 +142,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                 }
             }
             printInfo();
-        }*/
+        }
     }
     
     
@@ -265,11 +265,11 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
         ImplPolyEbay polyEbay;
         polyEbay = new ImplPolyEbay();
 		polyEbay.demarrerServeur(args[0]);
-        polyEbay.addArticle("livre java 1", 09.00, "00:02:00");
-        polyEbay.addArticle("livre c++ 1", 12.99, "00:15:00");
-        polyEbay.addArticle("livre philo 1", 04.99, "00:10:00");
-        polyEbay.addArticle("livre qwer", 5.00, "00:03:00");
-        polyEbay.addArticle("livre resta", 4.30, "00:05:00");
+        polyEbay.addArticle("livre java 1", 09.00, "01:32:00");
+        polyEbay.addArticle("livre c++ 1", 12.99, "01:35:00");
+        polyEbay.addArticle("livre philo 1", 04.99, "01:30:00");
+        polyEbay.addArticle("livre qwer", 5.00, "01:33:00");
+        polyEbay.addArticle("livre resta", 4.30, "01:35:00");
         
         InputStreamReader in = new InputStreamReader(System.in);
         String In;
@@ -288,12 +288,11 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            try {
-                Thread.sleep(5000);
+            //try {
                 polyEbay.printInfo();
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+            //} catch (InterruptedException ex) {
+            //    ex.printStackTrace();
+            //}
             
         }
         
