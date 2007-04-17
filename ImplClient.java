@@ -21,7 +21,7 @@ import java.util.Vector;
 public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private String nom;
     private String monIp;
-    private String IP_EBAY;    
+    private String IP_EBAY;
     private String IP_PAYPAL;
     private ClientConnect cc;
     private Article curArticle;
@@ -43,7 +43,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             credit =0;
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
-        }            
+        }
     }
     
     public String getLogin(){return nom;}
@@ -51,8 +51,11 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     public String getTimeServeur(){return cc.getTimeServeur(curArtIndex);}
     public void setLogin(String s){ nom = s ;}
     public void setcurArticle(int i){
-        curArticle = cc.getArticle(i);
-        curArtIndex = i;
+      if(curArtIndex==-1 && i!=-1) {
+            curArticle = cc.getArticle(i);
+            curArtIndex = i;
+      }
+       else return;
         try {
             remotePolyEbay.addClientArticle(monIp, curArticle.getNom());
         } catch (RemoteException ex) {
@@ -78,7 +81,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
         credit = remotePolypaypal.checkCredit(nom);
     }
     
-    // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est 
+    // Cette fonction permet la connexion au gestionnaire de fichier dont l'adresse IP est
     // spécifié en paramêtre.
     public boolean connexionEbay(String ipEbay, String ipPaypal) {
         IP_EBAY = ipEbay;
@@ -88,11 +91,10 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             remotePolypaypal = (InterfacePolyPaypal)Naming.lookup("//" + IP_PAYPAL + ":5000/POLYPAYPAL");
             credit = remotePolypaypal.connect(nom);
             if(credit>0){
-            remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/POLYEBAY");
-            cc = remotePolyEbay.connectClient(nom,monIp);
-            return cc.isConnected();
-            }
-            else return false;
+                remotePolyEbay = (InterfacePolyEbay)Naming.lookup("//" + IP_EBAY + ":4500/POLYEBAY");
+                cc = remotePolyEbay.connectClient(nom,monIp);
+                return cc.isConnected();
+            } else return false;
         } catch(Exception e) {
             e.printStackTrace();
             return false;
@@ -113,7 +115,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     }
     
     // Cette fonction arrête le serveur personnel de l'utilisateur
-     public void arreterServeurPerso(){
+    public void arreterServeurPerso(){
         try {
             Naming.unbind("rmi://" + monIp + "/" + nom);
         } catch (MalformedURLException ex) {
