@@ -16,7 +16,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 import java.util.Vector;
-
+import java.io*;
 
 public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private String nom;
@@ -41,6 +41,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
             monIp+=":"+port;
             port++;
             credit =0;
+            
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
         }
@@ -130,20 +131,20 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     // Cette fonction démarre le serveur personnel de l'utilisateur.
     public void demarrerServeurPerso() {
         try{
-            java.rmi.registry.LocateRegistry.createRegistry(1098);
-            System.out.println("Registre cree sur le port 1098");
+            java.rmi.registry.LocateRegistry.createRegistry(port);
+            System.out.println("Registre cree sur le port "+port);
         } catch(Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         try {
-            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(1098);
-            System.out.println("Registre du port 1098 utilise");
+            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(port);
+            System.out.println("Registre du port "+port+" utilise");
         } catch (Exception e) {
             e.printStackTrace();
         }
         // Créer et installer le gestionnaire de sécurité.
         if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new SecurityManager());
+            System.setSecurityManager(new RMISecurityManager());
         }
         try {
             Naming.rebind("rmi://" + monIp + "/" + nom, this);
