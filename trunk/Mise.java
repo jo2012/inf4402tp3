@@ -31,7 +31,7 @@ public class Mise  implements java.io.Serializable {
 	
 	public int print(){		
 		
-		String st = montant+"$ par "+client+ " à "+dateMise;//timeFormat.format(dateMise);
+		String st = montant+"$ par "+client+ " à "+dateMise;
 		System.out.print(st);
 		return st.length();
 	}
