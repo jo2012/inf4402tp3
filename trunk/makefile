@@ -7,10 +7,10 @@ clean:
 	rm -f *.class
 	
 run_polyebay:
-	java -Djava.security.policy=policy ImplPolyEbay
+	java -Djava.security.policy=policy ImplPolyEbay localhost
     
 run_polypaypal:
-	java -Djava.security.policy=policy ImplPolyPaypal   
+	java -Djava.security.policy=policy ImplPolyPaypal  localhost 
 	
 run_creditcheck:
 	java -Djava.security.policy=policy ImplCreditCheck
