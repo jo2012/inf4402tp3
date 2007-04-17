@@ -68,10 +68,19 @@ public class ImplCreditCheck extends UnicastRemoteObject implements InterfaceCre
      */
     public synchronized float updateClientCredit(String c, float d) throws RemoteException{
         float a, f = mesClients.get(c);
-        a = f;
-	f-=d;
-        mesClients.put(c, new Float(f));
-	 System.out.println("Mise a jour du credit du client " + c + " : " +  a + " -> " + mesClients.get(c).floatValue());
+	a = f;
+        if(d > f)
+	{
+		System.out.println("Client " + c + " : mise illegale. Mise de " + d + " avec credit de " + f + "." );
+		System.out.println("Client " + c + " : Penalite de 10$." );
+		f-=10;
+	}
+	else
+	{
+		f -= d;
+	}
+	mesClients.put(c, new Float(f));
+	System.out.println("Mise a jour du credit du client " + c + " : " +  a + " -> " + mesClients.get(c).floatValue());
         return mesClients.get(c).floatValue();
     }
     

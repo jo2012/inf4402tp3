@@ -101,15 +101,11 @@ public float updateCredit(String c, float d) throws RemoteException {
 }
 
 public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
                 try {
                     new ImplPolyPaypal();
                 } catch (RemoteException ex) {
                     ex.printStackTrace();
                 }
-            }
-        });
     }
 
     private void connectCreditCheck() {
