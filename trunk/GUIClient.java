@@ -31,12 +31,17 @@ public class GUIClient extends javax.swing.JFrame {
     public GUIClient() {
         String monLogin = "";
         while(monLogin=="")
-            monLogin = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
-        try {
-            monClient = new ImplClient(monLogin);
+            monLogin = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");            
+            String monPort = JOptionPane.showInputDialog("Entrez votre numero de port");
+        try {            
+            monClient = new ImplClient(monLogin, Integer.parseInt(monPort));
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
+            
+        
         initComponents();
         isConnected = false;
         lesArticles = new Vector<Article>();

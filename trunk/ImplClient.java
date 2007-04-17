@@ -16,7 +16,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 import java.util.Vector;
-import java.io*;
 
 public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private String nom;
@@ -29,17 +28,16 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     private InterfacePolyPaypal remotePolypaypal;
     private Date delaiReseau;
     private float credit;
-    private static int port = 1098;
+    private int port = 1098;
     private int curArtIndex=-1;
     
-    public ImplClient(String n) throws RemoteException{
+    public ImplClient(String n, int p) throws RemoteException{
         super();
         monIp ="";
         nom = n;
         try {
             monIp = InetAddress.getLocalHost().getHostAddress();
             monIp+=":"+port;
-            port++;
             credit =0;
             
         } catch (UnknownHostException ex) {
@@ -51,6 +49,7 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     public float getCredit(){return credit;}
     public String getTimeServeur(){return cc.getTimeServeur(curArtIndex);}
     public void setLogin(String s){ nom = s ;}
+    public void setPort(int p){ port = p;}
     public void setcurArticle(int i){
       if(curArtIndex==-1 && i!=-1) {
             curArticle = cc.getArticle(i);
@@ -131,14 +130,14 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
     // Cette fonction démarre le serveur personnel de l'utilisateur.
     public void demarrerServeurPerso() {
         try{
-            java.rmi.registry.LocateRegistry.createRegistry(port-1);
-            System.out.println("Registre cree sur le port "+port-1);
+            java.rmi.registry.LocateRegistry.createRegistry(port);
+            System.out.println("Registre cree sur le port "+port);
         } catch(Exception e) {
             //e.printStackTrace();
         }
         try {
-            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(port-1);
-            System.out.println("Registre du port "+port-1+" utilise");
+            java.rmi.registry.Registry reg = java.rmi.registry.LocateRegistry.getRegistry(port);
+            System.out.println("Registre du port "+port+" utilise");
         } catch (Exception e) {
             e.printStackTrace();
         }
