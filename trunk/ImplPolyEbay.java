@@ -123,7 +123,8 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
     public synchronized void miserArticle(String ipClient, String article, float montant) throws RemoteException {
         boolean isArt = false;
         Article unArt ;
-        if(clientsArticle.get(ipClient).compareTo(article)==0){
+	System.out.println("Client : " + ipClient + " mise " + montant + " sur " + article);
+        /*if(clientsArticle.get(ipClient).compareTo(article)==0){
             for(Iterator ite = articles.iterator(); ite.hasNext() && !isArt ; ){
                 unArt = (Article) ite.next();
                 if(unArt.getNom().compareTo(article)==0){
@@ -141,7 +142,7 @@ public class ImplPolyEbay extends UnicastRemoteObject implements InterfacePolyEb
                 }
             }
             printInfo();
-        }
+        }*/
     }
     
     
