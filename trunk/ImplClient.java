@@ -35,7 +35,9 @@ public class ImplClient extends UnicastRemoteObject implements InterfaceClient {
         super();
         monIp ="";
         nom = n;
+		port = p;
         try {
+			
             monIp = InetAddress.getLocalHost().getHostAddress();
             monIp+=":"+port;
             credit =0;
